@@ -75,3 +75,7 @@ header {
     font-weight: 300;
     letter-spacing: 2px;
 }
+
+/*------------------------------MAP*/
+
+#map {min-height: 360px;}
