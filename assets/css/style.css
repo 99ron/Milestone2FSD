@@ -1,71 +1,49 @@
-
-
-
-
-
-
+/*--------------------------------------------Colours*/
 /*--------------------------------------------Heading*/
-
 header {
-    margin: 0;
-}
+  margin: 0; }
 
 .heading {
-    margin-left: 50px;
-}
+  margin-left: 50px; }
 
 .header-color {
-    background-color: orange;
-}
-
+  background-color: orange; }
 
 .name {
-    font-family: "Exo", sans-serif;
-    font-weight: 100;
-    font-size: 46px;
-    margin-top: 50px;
-    color: #ffffff;
-}
+  font-family: "Roboto", sans-serif;
+  font-weight: 100;
+  font-size: 46px;
+  margin-top: 50px;
+  color: #ffffff; }
 
 .title {
-    font-family: "Roboto", sans-serif;
-    font-weight: 200;
-    font-size: 28px;
-    margin-top: 20px;
-    margin-bottom: 90px;
-    color: #ffffff;
-}
+  font-family: "Roboto", sans-serif;
+  font-weight: 200;
+  font-size: 28px;
+  margin-top: 20px;
+  margin-bottom: 90px;
+  color: #ffffff; }
 
 #nav {
-    margin: 0;
-}
-
-#nav li {
-    padding: 0;
-}
+  margin: 0; }
+  #nav li {
+    padding: 0; }
 
 .menuitem {
-    height: 120px;
-    text-align: center;
-    padding: 0;
-}
-
-.menuitem a {
+  height: 120px;
+  text-align: center;
+  padding: 0; }
+  .menuitem a {
     width: 100%;
     text-decoration: none;
     /*color: #ffffff;*/
-    height: 120px;
-}
-
-
-.menuitem a i {
+    height: 120px; }
+  .menuitem i {
     padding-top: 22px;
     display: block;
     color: #fafafa;
-    font-size: 26px;
-}
-
-.menuitem span {
+    font-size: 26px; }
+  .menuitem span {
     display: block;
     width: 100%;
     padding-top: 5px;
@@ -73,9 +51,21 @@ header {
     text-transform: uppercase;
     font-size: 14px;
     font-weight: 300;
-    letter-spacing: 2px;
-}
+    letter-spacing: 2px; }
 
-/*------------------------------MAP*/
+/*-------------------------------------Body*/
+.section-padding {
+  padding: 10px 20px 10px 20px; }
 
-#map {min-height: 360px;}
+/*-------------------------------------Other*/
+.nav-border {
+  border-bottom: solid 2px black; }
+
+.map-border {
+  border: solid 2px black; }
+
+/*-------------------------------------MAP*/
+#map {
+  min-height: 360px; }
+
+/*# sourceMappingURL=style.css.map */
