@@ -37,7 +37,7 @@ function initMap() {
           
           // Icon, name and location for each place.
           var bounds = new google.maps.LatLngBounds();
-          places,forEach(function(place) {
+          places, forEach(function(place) {
               if (!place.geometry) {
                   console.log("No geometry for this place");
                   return;
@@ -68,17 +68,5 @@ function initMap() {
             map.fitBounds(bounds);  
           });
 
-   
-    // Add some markers to the map.
-    var markers = locations.map(function(location, i) {
-        return new google.maps.Marker({
-            position: location,
-            label: labels[i % labels.length]
-        });
-    });
-
-    var markerCluster = new MarkerClusterer(map, markers, {
-        imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'
-    });
 
 }
