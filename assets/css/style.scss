@@ -3,7 +3,8 @@
 $background-color: orange;
 $foreground-color: white;
 $border-color: black;
-$font-family: "Roboto", sans-serif;
+$font-family: "Roboto",
+sans-serif;
 
 
 /*--------------------------------------------Heading*/
@@ -40,23 +41,23 @@ header {
 
 #nav {
     margin: 0;
-    
+
     li {
         padding: 0;
-  }
+    }
 }
 
 .menuitem {
-        height: 120px;
-        text-align: center;
-        padding: 0;
+    height: 120px;
+    text-align: center;
+    padding: 0;
 
     a {
         width: 100%;
         text-decoration: none;
         /*color: #ffffff;*/
         height: 120px;
-        }
+    }
 
 
     i {
@@ -64,9 +65,9 @@ header {
         display: block;
         color: #fafafa;
         font-size: 26px;
-       }
+    }
 
-    span{
+    span {
         display: block;
         width: 100%;
         padding-top: 5px;
@@ -75,14 +76,38 @@ header {
         font-size: 14px;
         font-weight: 300;
         letter-spacing: 2px;
-        }
+    }
 }
 
 /*-------------------------------------Body*/
 
- .section-padding {
-     padding: 10px 20px 10px 20px;
- }
+.section-padding {
+    padding: 10px 20px 10px 20px;
+}
+
+.btn-color {
+    background-color: $background-color;
+}
+
+.poiShow, .mapResultsContainer {
+    visibility: hidden;
+}
+
+#resultsTable {
+    border-collapse: collapse;
+    width: 240px;
+}
+
+#mapResults {
+    width: 100%;
+    height: 470px;
+    overflow: auto;
+    left: 442px;
+    top: 0px;
+    cursor: pointer;
+    overflow-x: hidden;
+}
+
 
 
 /*-------------------------------------Other*/
@@ -95,6 +120,29 @@ header {
     border: solid 2px $border-color;
 }
 
+.placeIcon {
+    width: 20px;
+    height: 34px;
+    margin: 4px;
+}
+
+
+.iw_table_row {
+    height: 18px;
+}
+
+.iw_attribute_name {
+    font-weight: bold;
+    text-align: right;
+}
+
+.iw_table_icon {
+    text-align: right;
+}
+
+
 /*-------------------------------------MAP*/
 
-#map {min-height: 360px;}
+#map {
+    min-height: 440px;
+}

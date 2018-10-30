@@ -1,4 +1,4 @@
-// This example uses the autocomplete feature of the Google Places API.
+      // This example uses the autocomplete feature of the Google Places API.
       // It allows the user to find all hotels in a given place, within a given
       // country. It then displays markers for all the hotels returned,
       // with on-click details for each hotel.
@@ -7,63 +7,67 @@
       // parameter when you first load the API. For example:
       // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
 
-      var map, places, infoWindow;
+      var map, places, infoWindow, poiInfoWindow;
+      var search = {};
       var markers = [];
+      var poiMarkers = [];
       var autocomplete;
       var MARKER_PATH = 'https://developers.google.com/maps/documentation/javascript/images/marker_green';
+      var MARK_PATH = 'https://developers.google.com/maps/documentation/javascript/images/marker_green';
       var hostnameRegexp = new RegExp('^https?://.+?/');
+
 
       var countries = {
         'au': {
-          center: {lat: -25.3, lng: 133.8},
+          center: { lat: -25.3, lng: 133.8 },
           zoom: 4
         },
         'br': {
-          center: {lat: -14.2, lng: -51.9},
+          center: { lat: -14.2, lng: -51.9 },
           zoom: 3
         },
         'ca': {
-          center: {lat: 62, lng: -110.0},
+          center: { lat: 62, lng: -110.0 },
           zoom: 3
         },
         'fr': {
-          center: {lat: 46.2, lng: 2.2},
+          center: { lat: 46.2, lng: 2.2 },
           zoom: 5
         },
         'de': {
-          center: {lat: 51.2, lng: 10.4},
+          center: { lat: 51.2, lng: 10.4 },
           zoom: 5
         },
         'mx': {
-          center: {lat: 23.6, lng: -102.5},
+          center: { lat: 23.6, lng: -102.5 },
           zoom: 4
         },
         'nz': {
-          center: {lat: -40.9, lng: 174.9},
+          center: { lat: -40.9, lng: 174.9 },
           zoom: 5
         },
         'it': {
-          center: {lat: 41.9, lng: 12.6},
+          center: { lat: 41.9, lng: 12.6 },
           zoom: 5
         },
         'za': {
-          center: {lat: -30.6, lng: 22.9},
+          center: { lat: -30.6, lng: 22.9 },
           zoom: 5
         },
         'es': {
-          center: {lat: 40.5, lng: -3.7},
+          center: { lat: 40.5, lng: -3.7 },
           zoom: 5
         },
         'pt': {
-          center: {lat: 39.4, lng: -8.2},
+          center: { lat: 39.4, lng: -8.2 },
           zoom: 6
         },
         'us': {
-          center: {lat: 37.1, lng: -95.7},
+          center: { lat: 37.1, lng: -95.7 },
           zoom: 3
         },
         'uk': {
-          center: {lat: 54.8, lng: -4.6},
+          center: { lat: 54.8, lng: -4.6 },
           zoom: 5
         }
       };
@@ -82,19 +86,20 @@
           content: document.getElementById('info-content')
         });
 
+        poiInfoWindow = new google.maps.InfoWindow({
+          content: document.getElementById('poi-info-content')
+        });
+
         // Create the autocomplete object and associate it with the UI input control.
-        // Restrict the search to the default country, and to place type "cities".
         autocomplete = new google.maps.places.Autocomplete(
-            /** @type {!HTMLInputElement} */ (
-                document.getElementById('locationSearch')), {
-              types: ['(cities)'],
-              
-            });
+          /** @type {!HTMLInputElement} */
+          (
+            document.getElementById('locationSearch')), {
+            types: ['(cities)']
+          });
         places = new google.maps.places.PlacesService(map);
 
         autocomplete.addListener('place_changed', onPlaceChanged);
-
-        
       }
 
       // When the user selects a city, get the place details for the city and
@@ -103,20 +108,35 @@
         var place = autocomplete.getPlace();
         if (place.geometry) {
           map.panTo(place.geometry.location);
-          map.setZoom(15);
-          search();
-        } else {
+          map.setZoom(12);
+          document.getElementsByClassName("poiShow")[0].style.visibility = "visible";
+          document.getElementsByClassName("mapResultsContainer")[0].style.visibility = "visible";
+          
+          searchLodging();
+        }
+        else {
           document.getElementById('autocomplete').placeholder = 'Enter a city';
         }
       }
 
       // Search for hotels in the selected city, within the viewport of the map.
-      function search() {
-        var search = {
+      function searchLodging() {
+        search = {
           bounds: map.getBounds(),
           types: ['lodging']
+        };  
+          searchNearby()
+      }
+      
+      function searchPOI() {
+        search = {
+          bounds: map.getBounds(),
+          types: [document.getElementById("poi").value]
         };
-
+        searchNearby()
+      }
+      
+      function searchNearby() {
         places.nearbySearch(search, function(results, status) {
           if (status === google.maps.places.PlacesServiceStatus.OK) {
             clearResults();
@@ -141,6 +161,7 @@
             }
           }
         });
+
       }
 
       function clearMarkers() {
@@ -152,22 +173,7 @@
         markers = [];
       }
 
-      // Set the country restriction based on user input.
-      // Also center and zoom the map on the given country.
-      function setAutocompleteCountry() {
-        var country = document.getElementById('country').value;
-        if (country == 'all') {
-          autocomplete.setComponentRestrictions({'country': []});
-          map.setCenter({lat: 15, lng: 0});
-          map.setZoom(2);
-        } else {
-          autocomplete.setComponentRestrictions({'country': country});
-          map.setCenter(countries[country].center);
-          map.setZoom(countries[country].zoom);
-        }
-        clearResults();
-        clearMarkers();
-      }
+      
 
       function dropMarker(i) {
         return function() {
@@ -200,6 +206,8 @@
         results.appendChild(tr);
       }
 
+      
+
       function clearResults() {
         var results = document.getElementById('results');
         while (results.childNodes[0]) {
@@ -207,33 +215,37 @@
         }
       }
 
+      
       // Get the place details for a hotel. Show the information in an info window,
       // anchored on the marker for the hotel that the user selected.
       function showInfoWindow() {
         var marker = this;
-        places.getDetails({placeId: marker.placeResult.place_id},
-            function(place, status) {
-              if (status !== google.maps.places.PlacesServiceStatus.OK) {
-                return;
-              }
-              infoWindow.open(map, marker);
-              buildIWContent(place);
-            });
+        places.getDetails({ placeId: marker.placeResult.place_id },
+          function(place, status) {
+            if (status !== google.maps.places.PlacesServiceStatus.OK) {
+              return;
+            }
+            infoWindow.open(map, marker);
+            buildIWContent(place);
+            
+            
+          });
       }
 
-      // Load the place information into the HTML elements used by the info window.
+            // Load the place information into the HTML elements used by the info window.
       function buildIWContent(place) {
         document.getElementById('iw-icon').innerHTML = '<img class="hotelIcon" ' +
-            'src="' + place.icon + '"/>';
+          'src="' + place.icon + '"/>';
         document.getElementById('iw-url').innerHTML = '<b><a href="' + place.url +
-            '">' + place.name + '</a></b>';
+          '">' + place.name + '</a></b>';
         document.getElementById('iw-address').textContent = place.vicinity;
 
         if (place.formatted_phone_number) {
           document.getElementById('iw-phone-row').style.display = '';
           document.getElementById('iw-phone').textContent =
-              place.formatted_phone_number;
-        } else {
+            place.formatted_phone_number;
+        }
+        else {
           document.getElementById('iw-phone-row').style.display = 'none';
         }
 
@@ -245,13 +257,15 @@
           for (var i = 0; i < 5; i++) {
             if (place.rating < (i + 0.5)) {
               ratingHtml += '&#10025;';
-            } else {
+            }
+            else {
               ratingHtml += '&#10029;';
             }
-          document.getElementById('iw-rating-row').style.display = '';
-          document.getElementById('iw-rating').innerHTML = ratingHtml;
+            document.getElementById('iw-rating-row').style.display = '';
+            document.getElementById('iw-rating').innerHTML = ratingHtml;
           }
-        } else {
+        }
+        else {
           document.getElementById('iw-rating-row').style.display = 'none';
         }
 
@@ -266,7 +280,12 @@
           }
           document.getElementById('iw-website-row').style.display = '';
           document.getElementById('iw-website').textContent = website;
-        } else {
+        }
+        else {
           document.getElementById('iw-website-row').style.display = 'none';
         }
+
+        //-----------------------------------------------------------------------------
+
       }
+      
