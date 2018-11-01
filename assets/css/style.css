@@ -54,6 +54,9 @@ header {
     letter-spacing: 2px; }
 
 /*-------------------------------------Body*/
+body {
+  background-color: #E6E6FA; }
+
 .section-padding {
   padding: 10px 20px 10px 20px; }
 

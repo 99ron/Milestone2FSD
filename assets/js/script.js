@@ -90,6 +90,10 @@
           content: document.getElementById('poi-info-content')
         });
 
+        // Clears the input boxes for a new search. 
+        document.getElementsByClassName('selectedHotelTB')[0].value = "";
+        document.getElementById('locationSearch').value = "";
+
         // Create the autocomplete object and associate it with the UI input control.
         autocomplete = new google.maps.places.Autocomplete(
           /** @type {!HTMLInputElement} */
@@ -111,7 +115,6 @@
           map.setZoom(12);
           document.getElementsByClassName("poiShow")[0].style.visibility = "visible";
           document.getElementsByClassName("mapResultsContainer")[0].style.visibility = "visible";
-          
           searchLodging();
         }
         else {
@@ -124,18 +127,18 @@
         search = {
           bounds: map.getBounds(),
           types: ['lodging']
-        };  
-          searchNearby()
+        };
+        searchNearby();
       }
-      
+
       function searchPOI() {
         search = {
           bounds: map.getBounds(),
           types: [document.getElementById("poi").value]
         };
-        searchNearby()
+        searchNearby();
       }
-      
+
       function searchNearby() {
         places.nearbySearch(search, function(results, status) {
           if (status === google.maps.places.PlacesServiceStatus.OK) {
@@ -173,7 +176,7 @@
         markers = [];
       }
 
-      
+
 
       function dropMarker(i) {
         return function() {
@@ -206,7 +209,7 @@
         results.appendChild(tr);
       }
 
-      
+
 
       function clearResults() {
         var results = document.getElementById('results');
@@ -215,7 +218,7 @@
         }
       }
 
-      
+
       // Get the place details for a hotel. Show the information in an info window,
       // anchored on the marker for the hotel that the user selected.
       function showInfoWindow() {
@@ -227,13 +230,14 @@
             }
             infoWindow.open(map, marker);
             buildIWContent(place);
-            document.getElementsByClassName("selectedHotelTB")[0].value = 
+            if (document.getElementById("poi").value === 'lodging')
+              document.getElementsByClassName('selectedHotelTB')[0].value =
               place.name;
-            
           });
+
       }
 
-            // Load the place information into the HTML elements used by the info window.
+      // Load the place information into the HTML elements used by the info window.
       function buildIWContent(place) {
         document.getElementById('iw-icon').innerHTML = '<img class="hotelIcon" ' +
           'src="' + place.icon + '"/>';
@@ -286,6 +290,7 @@
           document.getElementById('iw-website-row').style.display = 'none';
         }
 
+        
         //-----------------------------------------------------------------------------
 
       }

@@ -1,5 +1,6 @@
 /*--------------------------------------------Colours*/
 
+$bodyBackgroundColour: #E6E6FA;
 $background-color: orange;
 $foreground-color: white;
 $border-color: black;
@@ -80,6 +81,8 @@ header {
 }
 
 /*-------------------------------------Body*/
+
+body {background-color: $bodyBackgroundColour;}
 
 .section-padding {
     padding: 10px 20px 10px 20px;
