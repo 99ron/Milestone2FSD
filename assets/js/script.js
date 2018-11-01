@@ -227,7 +227,8 @@
             }
             infoWindow.open(map, marker);
             buildIWContent(place);
-            
+            document.getElementsByClassName("selectedHotelTB")[0].value = 
+              place.name;
             
           });
       }
