@@ -63,8 +63,8 @@ body {
 .btn-color {
   background-color: orange; }
 
-.poiShow, .mapResultsContainer {
-  visibility: hidden; }
+.poiShowContainer, .mapResultsContainer {
+  display: none; }
 
 #resultsTable {
   border-collapse: collapse;
@@ -72,12 +72,19 @@ body {
 
 #mapResults {
   width: 100%;
-  height: 470px;
+  height: 440px;
   overflow: auto;
   left: 442px;
   top: 0px;
   cursor: pointer;
   overflow-x: hidden; }
+
+.interestSelectedContainer {
+  padding-top: 10px; }
+  .interestSelectedContainer .selectedHotelTB {
+    width: 100%; }
+  .interestSelectedContainer .selectedPOItb {
+    width: 100%; }
 
 /*-------------------------------------Other*/
 .nav-border {

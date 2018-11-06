@@ -9,12 +9,12 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css" />
     <link rel="stylesheet" href="assets/css/style.css" type="text/css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="assets/js/script.js"></script>
+    <script src="assets/js/maps.js"></script>
+    <script src="assets/js/style.js"></script>
     <title>Holiday Booking System</title>
 </head>
 
-<body>
-
+<body onload="pageLoadUp()">
     <header class="container-fluid header-color nav-border">
         <div class="row">
             <a href="index.html" alt="Holiday Home!">
@@ -32,7 +32,7 @@
     <section>
         <div class="input-for-map section-padding">
             <div class="row">
-                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-8">
+                <div id="IBID" class="col-xs-12 col-sm-12 col-md-6 col-lg-12">
                     <div class="input-header">
                         <h2>Enter a City below...</h2>
                     </div>
@@ -43,7 +43,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 poiShow">
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 poiShowContainer">
                     <div class="poiNearby-header">
                         <h2>Point of interests nearby:</h2>
                     </div>
@@ -73,7 +73,7 @@
         </div>
         <div class="container-map section-padding">
             <div class="row">
-                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-8">
+                <div id="MAP" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <div class="map-header">
                         <h2>Listed locations.</h2>
                     </div>
@@ -81,7 +81,7 @@
                 </div>
 
 
-                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4 mapResultsContainer">
+                <div class="col-xs-12 col-sm-5 col-md-4 col-lg-4 mapResultsContainer">
                     <div class="mapResults-header">
                         <h2>Results in the area:</h2>
                     </div>
@@ -117,19 +117,21 @@
                         </table>
                     </div>
                 </div>
-                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-12 hotelSelectedContainer">
+                <div class="col-xs-12 col-sm-7 col-md-8 col-lg-8 interestSelectedContainer">
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="basic-addon1">Selected Hotel:</span>
                         </div>
                         <input type="text" class="selectedHotelTB" placeholder=" " aria-label="Hotel" aria-describedby="hotelSelectedTB" readonly>
                     </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">Selected POI:</span>
+                        </div>
+                        <input type="text" class="selectedPOItb" placeholder=" " aria-label="Hotel" aria-describedby="poiSelectedTB" readonly>
+                    </div>
                 </div>
             </div>
-
-
-
-
         </div>
     </section>
     <footer>
