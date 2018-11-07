@@ -1,4 +1,4 @@
-var map, places, infoWindow, poiInfoWindow //;
+var map, places, infoWindow //;
 var search = {};
 var markers = [];
 var autocomplete;
@@ -20,10 +20,6 @@ function initMap() {
   
   infoWindow = new google.maps.InfoWindow({
     content: document.getElementById('info-content')
-  });
-
-  poiInfoWindow = new google.maps.InfoWindow({
-    content: document.getElementById('poi-info-content')
   });
 
   // Clears the input boxes for a new search. 
@@ -48,11 +44,8 @@ function onPlaceChanged() {
     map.panTo(place.geometry.location);
     map.setZoom(12);
     // Sets the 2 Class's from display =none to inline block.
-    document.getElementsByClassName("poiShowContainer")[0].style.display = "inline-block";
-    document.getElementsByClassName("mapResultsContainer")[0].style.display = "inline-block";
     // Changes the class to fit in the results next to search bar and map. 
-    $('#IBID').removeClass('col-lg-12').addClass('col-lg-8');
-    $('#MAP').removeClass('col-lg-12').addClass('col-lg-8');
+    showDisplayNone();
     searchLodging();
   }
   else {
