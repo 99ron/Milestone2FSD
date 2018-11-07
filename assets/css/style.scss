@@ -5,6 +5,7 @@ $background-color: orange;
 $foreground-color: white;
 $tbWidth: 100%;
 $border-color: black;
+$font-color: white;
 $font-family: "Roboto",
 sans-serif;
 
@@ -91,15 +92,24 @@ body {background-color: $bodyBackgroundColour;}
 
 .btn-color {
     background-color: $background-color;
+    color: $font-color;
 }
 
-.poiShowContainer, .mapResultsContainer {
+.btn-satNav {
+    width: 100%;
+}
+
+.poiShow-Container, .mapResults-Container, .interestSelected-Container, .satNav-Container {
+    display: none;
+}
+
+#isContainer-sH, #isContainer-sPOI {
     display: none;
 }
 
 #resultsTable {
     border-collapse: collapse;
-    width: 240px;
+    width: 100%;
 }
 
 #mapResults {
@@ -112,7 +122,7 @@ body {background-color: $bodyBackgroundColour;}
     overflow-x: hidden;
 }
 
-.interestSelectedContainer {
+.interestSelected-Container {
     padding-top: 10px;
     
     .selectedHotelTB {

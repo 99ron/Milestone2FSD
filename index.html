@@ -11,10 +11,11 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="assets/js/style.js"></script>
     <script src="assets/js/maps.js"></script>
+    <script src="assets/js/satNav.js"></script>
     <title>Holiday Booking System</title>
 </head>
 
-<body>
+<body onload="resetData()">
     <header class="container-fluid header-color nav-border">
         <div class="row">
             <a href="index.html" alt="Holiday Home!">
@@ -43,13 +44,13 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 poiShowContainer">
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 poiShow-Container">
                     <div class="poiNearby-header">
                         <h2>Point of interests nearby:</h2>
                     </div>
                     <div id="controls" class="poiControl">
                         <select class="btn btn-secondary dropdown-toggle btn-color" type="button" id="poi" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onchange="searchPOI()">
-                                <option value='lodging' active>Lodgings</option>
+                                <option value='lodging'>Lodgings</option>
                                 <option value="amusement_park">Amusement Park</option>
                                 <option value="aquarium">Aquarium</option>
                                 <option value="bar">Bar</option>
@@ -81,7 +82,7 @@
                 </div>
 
 
-                <div class="col-xs-12 col-sm-5 col-md-4 col-lg-4 mapResultsContainer">
+                <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 mapResults-Container">
                     <div class="mapResults-header">
                         <h2>Results in the area:</h2>
                     </div>
@@ -121,27 +122,26 @@
         </div>
         <div class="interestSelectedInfo section-padding">
             <div class="row">
-                <div id="isContainer" class="col-xs-12 col-sm-7 col-md-8 col-lg-8 interestSelected-Container">
-                    <div class="input-group mb-3">
+                <div id="isContainer" class="col-xs-12 col-sm-8 col-md-8 col-lg-8 interestSelected-Container">
+                    <div id="isContainer-sH" class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="basic-addon1">Selected Hotel:</span>
                         </div>
                         <input type="text" class="selectedHotelTB" placeholder=" " aria-label="Hotel" aria-describedby="hotelSelectedTB" readonly>
                     </div>
-                    <div class="input-group mb-3">
+                    <div id="isContainer-sPOI" class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="basic-addon1">Selected POI:</span>
                         </div>
                         <input type="text" class="selectedPOItb" placeholder=" " aria-label="Hotel" aria-describedby="poiSelectedTB" readonly>
                     </div>
                 </div>
-                <div id="snContainer" class="col-xs-12 col-sm-12 col-md-6 col-lg-4 satNav-Container">
+                <div id="snContainer" class="col-xs-12 col-sm-4 col-md-4 col-lg-4 satNav-Container">
                     <div class="satNav-header">
                         <h2>Click to navigate...</h2>
                     </div>
-                    <button class="btn btn-outline-secondary satNav-Button" type="button" onclick="">Navigate</button>
+                    <button class="btn btn-outline-secondary btn-satNav btn-color" type="button" onclick="planRoute()">Navigate</button>
                 </div>
-
                 <div id="poiNearby">
                     <table id="poiResultsTable">
                         <table id="poiResults"></table>

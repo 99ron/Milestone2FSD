@@ -61,14 +61,21 @@ body {
   padding: 10px 20px 10px 20px; }
 
 .btn-color {
-  background-color: orange; }
+  background-color: orange;
+  color: white; }
 
-.poiShowContainer, .mapResultsContainer {
+.btn-satNav {
+  width: 100%; }
+
+.poiShow-Container, .mapResults-Container, .interestSelected-Container, .satNav-Container {
+  display: none; }
+
+#isContainer-sH, #isContainer-sPOI {
   display: none; }
 
 #resultsTable {
   border-collapse: collapse;
-  width: 240px; }
+  width: 100%; }
 
 #mapResults {
   width: 100%;
@@ -79,11 +86,11 @@ body {
   cursor: pointer;
   overflow-x: hidden; }
 
-.interestSelectedContainer {
+.interestSelected-Container {
   padding-top: 10px; }
-  .interestSelectedContainer .selectedHotelTB {
+  .interestSelected-Container .selectedHotelTB {
     width: 100%; }
-  .interestSelectedContainer .selectedPOItb {
+  .interestSelected-Container .selectedPOItb {
     width: 100%; }
 
 /*-------------------------------------Other*/

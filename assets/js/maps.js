@@ -1,11 +1,12 @@
-var map, places, infoWindow //;
+var map, places, infoWindow;
 var search = {};
 var markers = [];
 var autocomplete;
-
 var MARKER_PATH = 'https://developers.google.com/maps/documentation/javascript/images/marker_green';
 var MARK_PATH = 'https://developers.google.com/maps/documentation/javascript/images/marker_green';
 var hostnameRegexp = new RegExp('^https?://.+?/');
+
+
 
 // Creates the map and associates it to the ID 'map'.
 function initMap() {
@@ -21,12 +22,8 @@ function initMap() {
   infoWindow = new google.maps.InfoWindow({
     content: document.getElementById('info-content')
   });
-
-  // Clears the input boxes for a new search. 
-  document.getElementsByClassName('selectedHotelTB')[0].value = "";
-  document.getElementsByClassName('selectedPOItb')[0].value = "";
-  document.getElementById('locationSearch').value = "";
-
+  // Resets textboxes and drop down list.
+  resetData();
   // Create the autocomplete object and associate it with the UI input control.
   autocomplete = new google.maps.places.Autocomplete(
     (
@@ -43,9 +40,9 @@ function onPlaceChanged() {
   if (place.geometry) {
     map.panTo(place.geometry.location);
     map.setZoom(12);
-    // Sets the 2 Class's from display =none to inline block.
-    // Changes the class to fit in the results next to search bar and map. 
-    showDisplayNone();
+    // Sets the class's from display =none to inline block.
+    // Changes the class to fit on the page. 
+    showDisplayOne();
     searchLodging();
   }
   else {
@@ -61,15 +58,17 @@ function searchLodging() {
   };
   searchNearby();
 }
+
 // Search for POI's from the dropdown within the viewpoint of the map.
 function searchPOI() {
   search = {
     bounds: map.getBounds(),
-    types: [document.getElementById("poi").value]
+    types: [document.getElementById('poi').value]
   };
   searchNearby();
 }
 
+//Searches with the types as selected above.
 function searchNearby() {
   places.nearbySearch(search, function(results, status) {
     if (status === google.maps.places.PlacesServiceStatus.OK) {
@@ -162,13 +161,22 @@ function showInfoWindow() {
       
       // Checks what the dropdown list is currently selected on and fills either
       // text boxes with the location's name.
-      if (document.getElementById("poi").value === 'lodging')
+      if (document.getElementById('poi').value === 'lodging') {
         document.getElementsByClassName('selectedHotelTB')[0].value =
-        place.name;
-
-      else {
+          place.name,
+          // Displays the text boxes for selected locations.
+          showDisplayTwo();
+      } else {
         document.getElementsByClassName('selectedPOItb')[0].value =
-          place.name;
+          place.name,
+          // Displays the POI textbox.
+         showDisplayFour();
+      }
+      // if statement for if textbox ISN'T empty then display satnav btn.
+      if (document.getElementsByClassName('selectedPOItb')[0].value !== "") {
+        showDisplayThree();
+      } else {
+        return;
       }
     });
 }
@@ -230,22 +238,7 @@ function buildIWContent(place) {
 
   //-----------------------------------------------------------------------------
 
-function planRoute() {
-  var dirDisplay = new google.maps.DirectionsRenderer();
-  var dirService = new google.maps.DirectionsService();
-  var start = document.getElementById('selectedHotelTB').value;
-  var end = document.getElementById('selectedPOItb').value;
-  var request = {
-    origin: start,
-    destination: end,
-    travelMode: 'WALKING'
-  };
-  dirService.route(request, function(result, status) {
-    if (status == 'OK') {
-      dirDisplay.setDirections(result);
-    }
-  });
-}
+
 
 
 }
