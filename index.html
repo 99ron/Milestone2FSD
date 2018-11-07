@@ -9,12 +9,12 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css" />
     <link rel="stylesheet" href="assets/css/style.css" type="text/css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="assets/js/maps.js"></script>
     <script src="assets/js/style.js"></script>
+    <script src="assets/js/maps.js"></script>
     <title>Holiday Booking System</title>
 </head>
 
-<body onload="pageLoadUp()">
+<body>
     <header class="container-fluid header-color nav-border">
         <div class="row">
             <a href="index.html" alt="Holiday Home!">
@@ -62,7 +62,7 @@
                             </select>
                         <button class="btn btn-outline-secondary" type="button" onclick="searchPOI()">Refresh</button>
                     </div>
-                    
+
                     <div id="poiNearby">
                         <table id="poiResultsTable">
                             <table id="poiResults"></table>
@@ -73,7 +73,7 @@
         </div>
         <div class="container-map section-padding">
             <div class="row">
-                <div id="MAP" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div id="MAP" class="col-xs-12 col-sm-12 col-md-8 col-lg-12">
                     <div class="map-header">
                         <h2>Listed locations.</h2>
                     </div>
@@ -117,7 +117,11 @@
                         </table>
                     </div>
                 </div>
-                <div class="col-xs-12 col-sm-7 col-md-8 col-lg-8 interestSelectedContainer">
+            </div>
+        </div>
+        <div class="interestSelectedInfo section-padding">
+            <div class="row">
+                <div id="isContainer" class="col-xs-12 col-sm-7 col-md-8 col-lg-8 interestSelected-Container">
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="basic-addon1">Selected Hotel:</span>
@@ -131,7 +135,20 @@
                         <input type="text" class="selectedPOItb" placeholder=" " aria-label="Hotel" aria-describedby="poiSelectedTB" readonly>
                     </div>
                 </div>
+                <div id="snContainer" class="col-xs-12 col-sm-12 col-md-6 col-lg-4 satNav-Container">
+                    <div class="satNav-header">
+                        <h2>Click to navigate...</h2>
+                    </div>
+                    <button class="btn btn-outline-secondary satNav-Button" type="button" onclick="">Navigate</button>
+                </div>
+
+                <div id="poiNearby">
+                    <table id="poiResultsTable">
+                        <table id="poiResults"></table>
+                    </table>
+                </div>
             </div>
+        </div>
         </div>
     </section>
     <footer>
