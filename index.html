@@ -19,21 +19,14 @@
     <header class="container-fluid header-color nav-border">
         <div class="row">
             <a href="index.html" alt="Holiday Home!">
-                <div class="col-md-4 title-font">Holiday Booking!</div>
+                <div class="col-md-4 title">Holiday Booking!</div>
             </a>
-            <div class="row">
-                <ul id="nav" class="list-inline">
-                    <li class="col-xs-6 col-sm-2 ui-menu-colour menuitem">
-                        <a href="index.html" class="hvr-sweep-to-bottom"><i class="fa fa-home" aria-hidden="true"></i><span>Home</span></a>
-                    </li>
-                </ul>
-            </div>
         </div>
     </header>
     <section>
-        <div class="input-for-map section-padding">
+        <div class="input-for-map section-padding bg-colour">
             <div class="row">
-                <div id="IBID" class="col-xs-12 col-sm-12 col-md-6 col-lg-12">
+                <div id="IBID" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <div class="input-header">
                         <h2>Enter a City below...</h2>
                     </div>
@@ -44,7 +37,11 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 poiShow-Container">
+            </div>
+        </div>
+        <div class="results-for-map section-padding bg-colour">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 poiShow-Container">
                     <div class="poiNearby-header">
                         <h2>Point of interests nearby:</h2>
                     </div>
@@ -61,7 +58,7 @@
                                 <option value="parking">Parking</option>
                                 <option value="restaurant">Restaurant</option>
                             </select>
-                        <button class="btn btn-outline-secondary" type="button" onclick="searchPOI()">Refresh</button>
+                        <button class="btn btn-outline-secondary" type="button" onclick="searchPOI()">Update POI</button>
                     </div>
 
                     <div id="poiNearby">
@@ -69,6 +66,10 @@
                             <table id="poiResults"></table>
                         </table>
                     </div>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 poiText-Container">
+                    <p class="poiText-p"> Once you've chosen a destination. Click on the button and choose a point of interest which will display all that are nearby on the map.
+                    If you move the map you can click on the Update button to refresh the list of POI nearby.</p>
                 </div>
             </div>
         </div>
