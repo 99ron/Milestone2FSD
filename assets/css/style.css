@@ -7,7 +7,10 @@ header {
   margin-left: 50px; }
 
 .header-color {
-  background-color: orange; }
+  background-color: #4d98df; }
+
+.input-header, .poiNearby-header, .poiText-p {
+  color: white; }
 
 .name {
   font-family: "Roboto", sans-serif;
@@ -21,58 +24,77 @@ header {
   font-weight: 200;
   font-size: 28px;
   margin-top: 20px;
-  margin-bottom: 90px;
-  color: #ffffff; }
+  margin-bottom: 10px;
+  color: #ffffff;
+  text-align: center; }
 
-#nav {
-  margin: 0; }
-  #nav li {
-    padding: 0; }
+/* #nav {
+    margin: 0;
+
+    li {
+        padding: 0;
+    }
+}
 
 .menuitem {
-  height: 120px;
-  text-align: center;
-  padding: 0; }
-  .menuitem a {
-    width: 100%;
-    text-decoration: none;
-    /*color: #ffffff;*/
-    height: 120px; }
-  .menuitem i {
-    padding-top: 22px;
-    display: block;
-    color: #fafafa;
-    font-size: 26px; }
-  .menuitem span {
-    display: block;
-    width: 100%;
-    padding-top: 5px;
+    height: 120px;
     text-align: center;
-    text-transform: uppercase;
-    font-size: 14px;
-    font-weight: 300;
-    letter-spacing: 2px; }
+    padding: 0;
 
+    a {
+        width: 100%;
+        text-decoration: none;
+        color: #ffffff;
+        height: 120px;
+    }
+
+
+    i {
+        padding-top: 22px;
+        display: block;
+        color: #fafafa;
+        font-size: 26px;
+    }
+
+    span {
+        display: block;
+        width: 100%;
+        padding-top: 5px;
+        text-align: center;
+        text-transform: uppercase;
+        font-size: 14px;
+        font-weight: 300;
+        letter-spacing: 2px;
+    }
+} */
 /*-------------------------------------Body*/
 body {
   background-color: #E6E6FA; }
+
+.bg-colour {
+  background-color: #4c4c4c; }
 
 .section-padding {
   padding: 10px 20px 10px 20px; }
 
 .btn-color {
-  background-color: orange;
+  background-color: #4d98df;
   color: white; }
 
 .btn-satNav {
   width: 100%; }
 
-.poiShow-Container, .mapResults-Container, .interestSelected-Container, .satNav-Container {
-  display: none; }
+/* .poiShow-Container, .mapResults-Container, .interestSelected-Container, .satNav-Container {
+    display: none;
+}
+
+#MAP {
+    visibility: hidden;
+} 
 
 #isContainer-sH, #isContainer-sPOI {
-  display: none; }
-
+    display: none;
+} */
 #resultsTable {
   border-collapse: collapse;
   width: 100%; }
@@ -92,6 +114,9 @@ body {
     width: 100%; }
   .interestSelected-Container .selectedPOItb {
     width: 100%; }
+
+.poiText-Container {
+  padding-top: 10px; }
 
 /*-------------------------------------Other*/
 .nav-border {
