@@ -14,12 +14,11 @@
     <script src="assets/js/satNav.js"></script>
     <title>Holiday Booking System</title>
 </head>
-
 <body onload="resetData()">
     <header class="container-fluid header-color nav-border">
         <div class="row">
-            <a href="index.html" alt="Holiday Home!">
-                <div class="col-md-4 title">Holiday Booking!</div>
+            <a class="mainLogo--center" href="index.html" alt="Holiday Home!">
+                <img class="mainLogo" src="./assets/images/3.png">
             </a>
         </div>
     </header>
@@ -68,14 +67,13 @@
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 poiText-Container">
-                    <p class="poiText-p"> Once you've chosen a destination. Click on the button and choose a point of interest which will display all that are nearby on the map.
-                    If you move the map you can click on the Update button to refresh the list of POI nearby.</p>
+                    <p class="poiText-p"> Once you've chosen a destination. Click on the button and choose a point of interest which will display all that are nearby on the map. If you move the map you can click on the Update button to refresh the list of POI nearby.</p>
                 </div>
             </div>
         </div>
         <div class="container-map section-padding">
             <div class="row">
-                <div id="MAP" class="col-xs-12 col-sm-12 col-md-8 col-lg-12">
+                <div id="MAP" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <div class="map-header">
                         <h2>Listed locations.</h2>
                     </div>
@@ -121,20 +119,20 @@
                 </div>
             </div>
         </div>
-        <div class="interestSelectedInfo section-padding">
+        <div class="interestSelectedInfo section-padding bg-colour">
             <div class="row">
                 <div id="isContainer" class="col-xs-12 col-sm-8 col-md-8 col-lg-8 interestSelected-Container">
                     <div id="isContainer-sH" class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">Selected Hotel:</span>
+                        <div class="input-group-prepend isContainer--width">
+                            <span class="input-group-text" id="basic-addon1">Hotel:</span>
+                            <input type="text" class="selectedHotelTB" placeholder=" " aria-label="Hotel" aria-describedby="hotelSelectedTB" readonly>
                         </div>
-                        <input type="text" class="selectedHotelTB" placeholder=" " aria-label="Hotel" aria-describedby="hotelSelectedTB" readonly>
                     </div>
                     <div id="isContainer-sPOI" class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">Selected POI:</span>
+                        <div class="input-group-prepend isContainer--width">
+                            <span class="input-group-text" id="basic-addon1">POI:</span>
+                            <input type="text" class="selectedPOItb" placeholder=" " aria-label="Hotel" aria-describedby="poiSelectedTB" readonly>
                         </div>
-                        <input type="text" class="selectedPOItb" placeholder=" " aria-label="Hotel" aria-describedby="poiSelectedTB" readonly>
                     </div>
                 </div>
                 <div id="snContainer" class="col-xs-12 col-sm-4 col-md-4 col-lg-4 satNav-Container">
