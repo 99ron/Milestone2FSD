@@ -1,5 +1,12 @@
 /*--------------------------------------------Colours*/
 /*--------------------------------------------Heading*/
+.mainLogo {
+  max-height: auto;
+  width: 300px; }
+
+.mainLogo--center {
+  margin: auto; }
+
 header {
   margin: 0; }
 
@@ -9,7 +16,7 @@ header {
 .header-color {
   background-color: #4d98df; }
 
-.input-header, .poiNearby-header, .poiText-p {
+.input-header, .poiNearby-header, .poiText-p, .satNav-header {
   color: white; }
 
 .name {
@@ -75,13 +82,13 @@ body {
   background-color: #4c4c4c; }
 
 .section-padding {
-  padding: 10px 20px 10px 20px; }
+  padding: 10px 10%; }
 
 .btn-color {
   background-color: #4d98df;
   color: white; }
 
-.btn-satNav {
+.btn-satNav, .isContainer--width {
   width: 100%; }
 
 /* .poiShow-Container, .mapResults-Container, .interestSelected-Container, .satNav-Container {
