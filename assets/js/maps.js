@@ -3,7 +3,6 @@ var search = {};
 var markers = [];
 var autocomplete;
 var MARKER_PATH = 'https://developers.google.com/maps/documentation/javascript/images/marker_green';
-var MARK_PATH = 'https://developers.google.com/maps/documentation/javascript/images/marker_green';
 var hostnameRegexp = new RegExp('^https?://.+?/');
 
 
@@ -40,8 +39,9 @@ function onPlaceChanged() {
   if (place.geometry) {
     map.panTo(place.geometry.location);
     map.setZoom(12);
-    // Sets the class's from display =none to inline block.
+    // Sets the class's from display =none to =inline block.
     // Changes the class to fit on the page. 
+    showMAP();
     showDisplayOne();
     searchLodging();
   }
@@ -113,31 +113,44 @@ function dropMarker(i) {
   };
 }
 
+
+//-------------***** print results to table in html *****-------------
+
 // Adds the results into a table which is associated by the ID 'results'.
-function addResult(result, i) {
+ function addResult(result, i) {
   var results = document.getElementById('results');
   var markerLetter = String.fromCharCode('A'.charCodeAt(0) + (i % 26));
   var markerIcon = MARKER_PATH + markerLetter + '.png';
-
   var tr = document.createElement('tr');
-  tr.style.backgroundColor = (i % 2 === 0 ? '#F0F0F0' : '#FFFFFF');
+  tr.style.backgroundColor = (i % 2 === 0 ? '#4d98df' : '#4c4c4c');
   tr.onclick = function() {
     google.maps.event.trigger(markers[i], 'click');
   };
-
+  
+  var singleImg = document.createElement('img');
   var iconTd = document.createElement('td');
   var nameTd = document.createElement('td');
+  var addressTd = document.createElement('td');
   var icon = document.createElement('img');
   icon.src = markerIcon;
   icon.setAttribute('class', 'placeIcon');
   icon.setAttribute('className', 'placeIcon');
   var name = document.createTextNode(result.name);
+  var address = document.createTextNode(result.vicinity);
+  
+  //console.log(result);
+  
   iconTd.appendChild(icon);
   nameTd.appendChild(name);
+  addressTd.appendChild(address);
   tr.appendChild(iconTd);
   tr.appendChild(nameTd);
+  tr.appendChild(addressTd);
   results.appendChild(tr);
-}
+} 
+
+
+//---------------------------------------------------------------------
 
 // Empties the table out.
 function clearResults() {
@@ -172,7 +185,7 @@ function showInfoWindow() {
           // Displays the POI textbox.
          showDisplayFour();
       }
-      // if statement for if textbox ISN'T empty then display satnav btn.
+      // if textbox ISN'T empty then display satnav btn.
       if (document.getElementsByClassName('selectedPOItb')[0].value !== "") {
         showDisplayThree();
       } else {
@@ -189,7 +202,7 @@ function buildIWContent(place) {
   document.getElementById('iw-url').innerHTML = '<b><a href="' + place.url +
     '">' + place.name + '</a></b>';
   document.getElementById('iw-address').textContent = place.vicinity;
-
+  
   if (place.formatted_phone_number) {
     document.getElementById('iw-phone-row').style.display = '';
     document.getElementById('iw-phone').textContent =
@@ -234,11 +247,4 @@ function buildIWContent(place) {
   else {
     document.getElementById('iw-website-row').style.display = 'none';
   }
-
-
-  //-----------------------------------------------------------------------------
-
-
-
-
 }
