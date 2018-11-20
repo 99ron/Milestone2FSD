@@ -1,7 +1,7 @@
 /*--------------------------------------------Colours*/
 
 $bgText-color: #4c4c4c;
-$bodyBackgroundColour: #E6E6FA;
+$bodyBackgroundColour: white;
 $background-color: #4d98df;
 $foreground-color: white;
 $tbWidth: 100%;
@@ -14,8 +14,9 @@ sans-serif;
 /*--------------------------------------------Heading*/
 
 .mainLogo {
-    max-height: auto;
-    width: 300px;
+    height: 160px;
+    background-color: rgba(0, 0, 0, 0.3);
+    box-shadow: 0px 0px 9px black;
 }
 
 .mainLogo--center {
@@ -31,11 +32,17 @@ header {
 }
 
 .header-color {
-    background-color: $background-color;
+    background-image: linear-gradient(rgba(44,52,80,0.5), rgba(44,62,80,0.5)), url("/assets/images/bannerCloud.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 
 .input-header, .poiNearby-header, .poiText-p, .satNav-header {
     color: $font-color;
+}
+
+.input-header {
+    padding-bottom: 10px;
 }
 
 .name {
@@ -60,6 +67,10 @@ header {
 
 body {background-color: $bodyBackgroundColour;}
 
+.transparent-background {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
 .bg-colour {
     background-color: $bgText-color;
 }
@@ -81,13 +92,18 @@ body {background-color: $bodyBackgroundColour;}
     color: $font-color;
 }
 
-.btn-satNav, .isContainer--width {
+.btn-colorSecondary {
+    background-color: grey;
+    color: $font-color;
+}
+
+.btn-satNav, .btn-resetNav, .isContainer--width {
     width: 100%;
 }
 
-/* .poiShow-Container, .mapResults-Container, .interestSelected-Container, .satNav-Container {
+/* .poiShow-Container, .poiText-Container, .mapResults-Container, .interestSelectedInfo, .satNav-Container {
     display: none;
-}
+} */
 
 #MAP {
     visibility: hidden;
@@ -95,7 +111,15 @@ body {background-color: $bodyBackgroundColour;}
 
 #isContainer-sH, #isContainer-sPOI {
     display: none;
-} */
+}
+
+.results-table {
+    color: $font-color;
+}
+
+.resetButton {
+    padding-top: 1rem;
+}
 
 #resultsTable {
     border-collapse: collapse;
@@ -112,6 +136,15 @@ body {background-color: $bodyBackgroundColour;}
     overflow-x: hidden;
 }
 
+.mapResults-Container {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.interestSelectedInfo {
+    width: $tbWidth;
+}
+
 .interestSelected-Container {
     padding-top: 10px;
     
@@ -126,6 +159,18 @@ body {background-color: $bodyBackgroundColour;}
 
 .poiText-Container {
     padding-top: 10px;
+}
+
+.satNav-Container {
+    padding-top: 10px;
+    
+    .btn-satNav {
+        width: $tbWidth;
+    }
+    
+    .btn-resetNav {
+        width: $tbWidth;
+    }
 }
 
 /*-------------------------------------Other*/
@@ -161,7 +206,10 @@ body {background-color: $bodyBackgroundColour;}
 
 /*-------------------------------------MAP*/
 
-
+#mapResults {
+    box-shadow: 0px 0px 15px black;
+    border: solid black 2px;
+}
 
 #map {
     min-height: 440px;
