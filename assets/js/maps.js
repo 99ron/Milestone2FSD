@@ -2,7 +2,8 @@ var map, places, infoWindow;
 var search = {};
 var markers = [];
 var autocomplete;
-var MARKER_PATH = 'https://developers.google.com/maps/documentation/javascript/images/marker_green';
+//var MARKER_PATH = 'https://developers.google.com/maps/documentation/javascript/images/marker_green';
+var MARKER_PATH = 'http://www.google.com/mapfiles/kml/paddle/';
 var hostnameRegexp = new RegExp('^https?://.+?/');
 
 
@@ -160,7 +161,7 @@ function clearResults() {
   }
 }
 
-// Get the place details for a hotel. Show the information in an info window,
+// Get the place details for the location. Show the information in an info window,
 // anchored on the marker for the hotel that the user selected.
 function showInfoWindow() {
   var marker = this;
