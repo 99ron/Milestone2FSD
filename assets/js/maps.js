@@ -117,30 +117,31 @@ function dropMarker(i) {
 
 //-------------***** print results to table in html *****-------------
 
-// Adds the results into a table which is associated by the ID 'results'.
  function addResult(result, i) {
-  var results = document.getElementById('results');
-  var markerLetter = String.fromCharCode('A'.charCodeAt(0) + (i % 26));
-  var markerIcon = MARKER_PATH + markerLetter + '.png';
-  var tr = document.createElement('tr');
-  tr.style.backgroundColor = (i % 2 === 0 ? '#4d98df' : '#4c4c4c');
+  var results = document.getElementById('mapResultsFull');
+  //var markerLetter = String.fromCharCode('A'.charCodeAt(0) + (i % 26));
+ // var markerIcon = MARKER_PATH + markerLetter + '.png';
+  var tr = document.createElement('resultsContainer');
+  //tr.style.backgroundColor = (i % 2 === 0 ? '#4d98df' : '#4c4c4c');
   tr.onclick = function() {
     google.maps.event.trigger(markers[i], 'click');
   };
   
-  var singleImg = document.createElement('img');
+  console.log(result)
+  
+  var photo = result.photos[0].getUrl({ 'maxWidth': 35, 'maxHeight': 35 });
   var iconTd = document.createElement('td');
   var nameTd = document.createElement('td');
   var addressTd = document.createElement('td');
   var icon = document.createElement('img');
-  icon.src = markerIcon;
-  icon.setAttribute('class', 'placeIcon');
-  icon.setAttribute('className', 'placeIcon');
+  icon.src = photo;
+  icon.setAttribute('class', 'td-img');
+  icon.setAttribute('className', 'td-img');
+  nameTd.setAttribute('class', 'td-name');
+  addressTd.setAttribute('class', 'td-address');  
   var name = document.createTextNode(result.name);
   var address = document.createTextNode(result.vicinity);
-  
-  //console.log(result);
-  
+
   iconTd.appendChild(icon);
   nameTd.appendChild(name);
   addressTd.appendChild(address);
@@ -150,8 +151,6 @@ function dropMarker(i) {
   results.appendChild(tr);
 } 
 
-
-//---------------------------------------------------------------------
 
 // Empties the table out.
 function clearResults() {
