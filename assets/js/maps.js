@@ -1,4 +1,4 @@
-var map, places, infoWindow;
+var map, places, infoWindow, dirService, dirDisplay;
 var search = {};
 var markers = [];
 var autocomplete;
@@ -280,8 +280,8 @@ function setRoute() {
     clearMarkers();
     clearResults();
     removeResultTable();
-    var dirService = new google.maps.DirectionsService();
-    var dirDisplay = new google.maps.DirectionsRenderer({ map });
+    dirService = new google.maps.DirectionsService();
+    dirDisplay = new google.maps.DirectionsRenderer({ map });
 
     var start = document.getElementsByClassName('selectedHotelTB')[0].value;
     var end = document.getElementsByClassName('selectedPOItb')[0].value;
@@ -298,7 +298,7 @@ function setRoute() {
     dirService.route(request, function(result, status) {
         if (status == 'OK') {
             dirDisplay.setDirections(result);
-            console.log(dirDisplay);
+            //console.log(dirDisplay);
         }
 
     });
@@ -306,7 +306,7 @@ function setRoute() {
 
 // Clears the navPoints
 function clearNavMarkers() {
-    setRoute(null)
-    //dirDisplay.setMap(null);
-    console.log(dirDisplay);
+    //setRoute(null)
+    dirDisplay.setMap(null);
+    //console.log();
 }
