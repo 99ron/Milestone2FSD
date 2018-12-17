@@ -2,7 +2,6 @@ var map, places, infoWindow;
 var search = {};
 var markers = [];
 var autocomplete;
-//var MARKER_PATH = 'https://developers.google.com/maps/documentation/javascript/images/marker_green';
 var MARKER_PATH = 'http://www.google.com/mapfiles/kml/paddle/';
 var hostnameRegexp = new RegExp('^https?://.+?/');
 
@@ -34,7 +33,7 @@ function initMap() {
   autocomplete.addListener('place_changed', onPlaceChanged);
 }
 
-// When the user types a location in, it then zooms the map in on the location specified.
+// When the user types a location in, it then zooms the map on the location specified.
 function onPlaceChanged() {
   var place = autocomplete.getPlace();
   if (place.geometry) {
@@ -76,7 +75,7 @@ function searchNearby() {
       clearResults();
       clearMarkers();
       // Create a marker for each hotel/POI found, and
-      // assign a letter of the alphabetic to each marker icon.
+      // assign a letter of the alphabet to each marker icon.
       for (var i = 0; i < results.length; i++) {
         var markerLetter = String.fromCharCode('A'.charCodeAt(0) + (i % 26));
         var markerIcon = MARKER_PATH + markerLetter + '.png';
@@ -96,7 +95,6 @@ function searchNearby() {
     }
   });
 }
-
 
 // Clears the markers from the map.
 function clearMarkers() {
@@ -223,23 +221,25 @@ function addResult(result, i) {
       //tr.style.backgroundColor = (i % 2 === 0 ? '#4d98df' : '#4c4c4c');
       tr.onclick = function() {
         google.maps.event.trigger(markers[i], 'click');
+        map.panTo(place.geometry.location);
+        map.setZoom(12);
       };
-
 
       console.log(place);
 
       var name = document.createTextNode(place.name);
       var address = document.createTextNode(place.formatted_address);
-      var nameHeader = document.createTextNode("Name: ");
-      var nameAddress = document.createTextNode("Address: ");
       var siteURL = document.createTextNode(place.website);
-      var photo = place.photos[0].getUrl({ 'maxWidth': 120, 'maxHeight': 120 });
-
-
+      var nameHeader = document.createTextNode("Name: ");
+      var addressHeader = document.createTextNode("Address: ");
+      var photo = place.photos[0].getUrl({ 'maxWidth': 250, 'maxHeight': 250 });
+      
+      
+      
       var iconTd = document.createElement('td');
       var nameTd = document.createElement('td');
       var addressTd = document.createElement('td');
-      var urlTd = document.createElement('td');
+      var siteTd = document.createElement('td');
       var icon = document.createElement('img');
       icon.src = photo;
 
@@ -248,20 +248,20 @@ function addResult(result, i) {
       iconTd.setAttribute('class', 'td-img');
       nameTd.setAttribute('class', 'td-name');
       addressTd.setAttribute('class', 'td-address');
-      tr.setAttribute('class', 'resultscontainer')
+      siteTd.setAttribute('class', 'td-website');
+      tr.setAttribute('class', 'resultscontainer');
 
       iconTd.appendChild(icon);
       nameTd.appendChild(nameHeader);
       nameTd.appendChild(name);
-      addressTd.appendChild(nameAddress);
+      addressTd.appendChild(addressHeader);
       addressTd.appendChild(address);
-      urlTd.appendChild(siteURL);
+      siteTd.appendChild(siteURL);
       tr.appendChild(iconTd);
       tr.appendChild(nameTd);
       tr.appendChild(addressTd);
-      tr.appendChild(urlTd);
+      tr.appendChild(siteTd);
       results.appendChild(tr);
-
     });
 }
 
@@ -271,4 +271,42 @@ function clearResults() {
   while (results.childNodes[0]) {
     results.removeChild(results.childNodes[0]);
   }
+}
+
+//****************SatNav Element******************//
+
+//Creates a function to set the route by driving method.
+function setRoute() {
+    clearMarkers();
+    clearResults();
+    removeResultTable();
+    var dirService = new google.maps.DirectionsService();
+    var dirDisplay = new google.maps.DirectionsRenderer({ map });
+
+    var start = document.getElementsByClassName('selectedHotelTB')[0].value;
+    var end = document.getElementsByClassName('selectedPOItb')[0].value;
+
+
+    var request = {
+        origin: start,
+        destination: end,
+        travelMode: 'DRIVING',
+    };
+
+    console.log(request);
+
+    dirService.route(request, function(result, status) {
+        if (status == 'OK') {
+            dirDisplay.setDirections(result);
+            console.log(dirDisplay);
+        }
+
+    });
+}
+
+// Clears the navPoints
+function clearNavMarkers() {
+    setRoute(null)
+    //dirDisplay.setMap(null);
+    console.log(dirDisplay);
 }
