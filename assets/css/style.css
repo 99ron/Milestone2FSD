@@ -1,8 +1,11 @@
 /*--------------------------------------------Colours*/
 /*--------------------------------------------Heading*/
 .mainLogo {
-  max-height: auto;
-  width: 300px; }
+  width: 100%;
+  max-width: 350px;
+  height: auto;
+  background-color: rgba(0, 0, 0, 0.3);
+  box-shadow: 0px 0px 9px black; }
 
 .mainLogo--center {
   margin: auto; }
@@ -14,10 +17,15 @@ header {
   margin-left: 50px; }
 
 .header-color {
-  background-color: #4d98df; }
+  background-image: linear-gradient(rgba(44, 52, 80, 0.5), rgba(44, 62, 80, 0.5)), url("/assets/images/bannerCloud.jpg");
+  background-size: cover;
+  background-repeat: no-repeat; }
 
 .input-header, .poiNearby-header, .poiText-p, .satNav-header {
   color: white; }
+
+.input-header {
+  padding-bottom: 10px; }
 
 .name {
   font-family: "Roboto", sans-serif;
@@ -37,7 +45,10 @@ header {
 
 /*-------------------------------------Body*/
 body {
-  background-color: #E6E6FA; }
+  background-color: white; }
+
+.transparent-background {
+  background-color: rgba(0, 0, 0, 0.1); }
 
 .bg-colour {
   background-color: #4c4c4c; }
@@ -49,38 +60,79 @@ body {
   border-bottom: solid #4d98df 2px; }
 
 .section-padding {
-  padding: 10px 10%; }
+  padding: 10px 5%; }
 
 .btn-color {
   background-color: #4d98df;
   color: white; }
 
-.btn-satNav, .isContainer--width {
+.btn-colorSecondary {
+  background-color: grey;
+  color: white; }
+
+.btn-satNav, .btn-resetNav, .isContainer--width {
   width: 100%; }
 
-/* .poiShow-Container, .mapResults-Container, .interestSelected-Container, .satNav-Container {
-    display: none;
-}
-
-#MAP {
-    visibility: hidden;
-} 
-
-#isContainer-sH, #isContainer-sPOI {
+/* .poiShow-Container, .poiText-Container, .mapResults-Container, .interestSelectedInfo, .satNav-Container {
     display: none;
 } */
-#resultsTable {
-  border-collapse: collapse;
-  width: 100%; }
+/*#MAP {
+    visibility: hidden;
+} */
+#isContainer-sH, #isContainer-sPOI {
+  display: none; }
 
-#mapResults {
+.results-table {
+  color: white; }
+
+.resetButton {
+  padding-top: 1rem; }
+
+/* #resultsTable {
+    border-collapse: collapse;
+    width: 100%;
+} */
+#mapResultsFull {
   width: 100%;
+  border-collapse: collapse;
   height: 440px;
   overflow: auto;
-  left: 442px;
   top: 0px;
   cursor: pointer;
   overflow-x: hidden; }
+
+.resultscontainer {
+  display: inline-table;
+  border: solid black 2px;
+  width: 100%;
+  margin-bottom: 10px; }
+  .resultscontainer .td-name {
+    min-width: 25%; }
+  .resultscontainer .td-address {
+    min-width: 40%; }
+  .resultscontainer .td-img {
+    min-width: 40%; }
+  .resultscontainer .img {
+    width: 100%;
+    min-width: 150px;
+    height: auto;
+    border-radius: 10px; }
+
+/* #mapResults {
+    width: 100%;
+    height: 440px;
+    overflow: auto;
+    left: 442px;
+    top: 0px;
+    cursor: pointer;
+    overflow-x: hidden;
+} */
+.mapResults-Container {
+  margin-top: 20px;
+  margin-bottom: 20px; }
+
+.interestSelectedInfo {
+  width: 100%; }
 
 .interestSelected-Container {
   padding-top: 10px; }
@@ -92,6 +144,13 @@ body {
 .poiText-Container {
   padding-top: 10px; }
 
+.satNav-Container {
+  padding-top: 10px; }
+  .satNav-Container .btn-satNav {
+    width: 100%; }
+  .satNav-Container .btn-resetNav {
+    width: 100%; }
+
 /*-------------------------------------Other*/
 .nav-border {
   border-bottom: solid 2px black; }
@@ -100,7 +159,7 @@ body {
   border: solid 2px black; }
 
 .placeIcon {
-  width: 20px;
+  width: 34px;
   height: 34px;
   margin: 4px; }
 
@@ -115,8 +174,12 @@ body {
   text-align: right; }
 
 /*-------------------------------------MAP*/
+#mapResults {
+  box-shadow: 0px 0px 15px black;
+  border: solid black 2px; }
+
 #map {
-  min-height: 440px;
+  min-height: 640px;
   box-shadow: 0px 2px 15px black; }
 
 /*# sourceMappingURL=style.css.map */

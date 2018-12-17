@@ -14,7 +14,9 @@ sans-serif;
 /*--------------------------------------------Heading*/
 
 .mainLogo {
-    height: 160px;
+    width: 100%;
+    max-width: 350px;
+    height: auto;
     background-color: rgba(0, 0, 0, 0.3);
     box-shadow: 0px 0px 9px black;
 }
@@ -84,7 +86,7 @@ body {background-color: $bodyBackgroundColour;}
 }
 
 .section-padding {
-    padding: 10px 10%;
+    padding: 10px 5%;
 }
 
 .btn-color {
@@ -105,9 +107,9 @@ body {background-color: $bodyBackgroundColour;}
     display: none;
 } */
 
-#MAP {
+/*#MAP {
     visibility: hidden;
-} 
+} */
 
 #isContainer-sH, #isContainer-sPOI {
     display: none;
@@ -121,12 +123,51 @@ body {background-color: $bodyBackgroundColour;}
     padding-top: 1rem;
 }
 
-#resultsTable {
+/* #resultsTable {
     border-collapse: collapse;
     width: 100%;
+} */
+
+#mapResultsFull {
+    width: 100%;
+    border-collapse: collapse;
+    height: 440px;
+    overflow: auto;
+    top: 0px;
+    cursor: pointer;
+    overflow-x: hidden;
 }
 
-#mapResults {
+.resultscontainer {
+    display: inline-table;
+    border: solid black 2px;
+    width: 100%;
+    margin-bottom:10px;
+    
+    .td-name {
+        
+        min-width: 25%;
+    }
+    
+    .td-address {
+        
+        min-width: 40%;
+    }
+    
+    .td-img {
+        min-width: 40%;
+    }
+    
+    .img {
+        width: 100%;
+        min-width: 150px;
+        height: auto;
+        border-radius: 10px;
+    }
+}    
+
+
+/* #mapResults {
     width: 100%;
     height: 440px;
     overflow: auto;
@@ -134,7 +175,7 @@ body {background-color: $bodyBackgroundColour;}
     top: 0px;
     cursor: pointer;
     overflow-x: hidden;
-}
+} */
 
 .mapResults-Container {
     margin-top: 20px;
@@ -184,7 +225,7 @@ body {background-color: $bodyBackgroundColour;}
 }
 
 .placeIcon {
-    width: 20px;
+    width: 34px;
     height: 34px;
     margin: 4px;
 }
@@ -212,6 +253,6 @@ body {background-color: $bodyBackgroundColour;}
 }
 
 #map {
-    min-height: 440px;
+    min-height: 640px;
     box-shadow: 0px 2px 15px black;
 }
