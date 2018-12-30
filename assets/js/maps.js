@@ -1,4 +1,4 @@
-var map, places, infoWindow, dirService, dirDisplay;
+var map, places, infoWindow, dirService, dirDisplay, startID, finishID;
 var search = {};
 var markers = [];
 var autocomplete;
@@ -50,14 +50,20 @@ function onPlaceChanged() {
   }
 }
 
-// Search for hotels within the viewport of the map.
+// Search for hotels within the viewport of the map only if a location is in the
+// search box.
 function searchLodging() {
+  if (document.getElementById('locationSearch').value !== "") { 
   search = {
     bounds: map.getBounds(),
     types: ['lodging']
   };
   searchNearby();
+} else {
+  alert('Please type a location!');
+  } 
 }
+
 
 // Search for POI's from the dropdown within the viewpoint of the map.
 function searchPOI() {
@@ -65,6 +71,7 @@ function searchPOI() {
     bounds: map.getBounds(),
     types: [document.getElementById('poi').value]
   };
+  //clearNavMarkers();
   searchNearby();
 }
 
@@ -130,12 +137,15 @@ function showInfoWindow() {
       if (document.getElementById('poi').value === 'lodging') {
         document.getElementsByClassName('selectedHotelTB')[0].value =
           place.name,
+          startID = place.formatted_address;
           // Displays the text boxes for selected locations.
           showDisplayTwo();
+          
       }
       else {
         document.getElementsByClassName('selectedPOItb')[0].value =
           place.name,
+          finishID = place.formatted_address;
           // Displays the POI textbox.
           showDisplayFour();
       }
@@ -229,17 +239,17 @@ function addResult(result, i) {
 
       var name = document.createTextNode(place.name);
       var address = document.createTextNode(place.formatted_address);
-      var siteURL = document.createTextNode(place.website);
-      var nameHeader = document.createTextNode("Name: ");
+      var phoneNumber = document.createTextNode(place.formatted_phone_number);
+      //var nameHeader = document.createTextNode("Name: ");
       var addressHeader = document.createTextNode("Address: ");
+      var phoneNumberHeader = document.createTextNode("Phone Number: ");
       var photo = place.photos[0].getUrl({ 'maxWidth': 250, 'maxHeight': 250 });
-      
       
       
       var iconTd = document.createElement('td');
       var nameTd = document.createElement('td');
       var addressTd = document.createElement('td');
-      var siteTd = document.createElement('td');
+      var phoneTd = document.createElement('td');
       var icon = document.createElement('img');
       icon.src = photo;
 
@@ -248,19 +258,20 @@ function addResult(result, i) {
       iconTd.setAttribute('class', 'td-img');
       nameTd.setAttribute('class', 'td-name');
       addressTd.setAttribute('class', 'td-address');
-      siteTd.setAttribute('class', 'td-website');
+      phoneTd.setAttribute('class', 'td-phone');
       tr.setAttribute('class', 'resultscontainer');
 
       iconTd.appendChild(icon);
-      nameTd.appendChild(nameHeader);
+      //nameTd.appendChild(nameHeader);
       nameTd.appendChild(name);
       addressTd.appendChild(addressHeader);
       addressTd.appendChild(address);
-      siteTd.appendChild(siteURL);
+      phoneTd.appendChild(phoneNumberHeader);
+      phoneTd.appendChild(phoneNumber);
       tr.appendChild(iconTd);
       tr.appendChild(nameTd);
       tr.appendChild(addressTd);
-      tr.appendChild(siteTd);
+      tr.appendChild(phoneTd);
       results.appendChild(tr);
     });
 }
@@ -279,13 +290,13 @@ function clearResults() {
 function setRoute() {
     clearMarkers();
     clearResults();
-    removeResultTable();
+    //removeResultTable();
     dirService = new google.maps.DirectionsService();
     dirDisplay = new google.maps.DirectionsRenderer({ map });
-
-    var start = document.getElementsByClassName('selectedHotelTB')[0].value;
-    var end = document.getElementsByClassName('selectedPOItb')[0].value;
-
+    dirDisplay.setPanel(document.getElementById('mapResultsFull'));
+  
+    var start = startID;
+    var end = finishID;
 
     var request = {
         origin: start,
@@ -293,20 +304,21 @@ function setRoute() {
         travelMode: 'DRIVING',
     };
 
-    console.log(request);
+    //console.log(request);
 
     dirService.route(request, function(result, status) {
         if (status == 'OK') {
             dirDisplay.setDirections(result);
-            //console.log(dirDisplay);
-        }
-
+        } else {
+            window.alert('Directions request failed due to ' + status + '\n Try searching for another location!');
+            searchPOI();
+          }
     });
 }
 
 // Clears the navPoints
 function clearNavMarkers() {
-    //setRoute(null)
     dirDisplay.setMap(null);
-    //console.log();
+    dirDisplay.setPanel(null);
+    //resetData();
 }
