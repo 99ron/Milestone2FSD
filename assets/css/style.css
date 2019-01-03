@@ -100,45 +100,31 @@ body {
   overflow-x: hidden; }
 
 .resultscontainer {
-  display: flow-root;
+  display: inline-grid;
   border: solid #4d98df 1px;
   border-bottom: solid #4d98df 4px;
-  background-color: white;
   border-radius: 20px;
   width: 100%;
   margin-bottom: 10px;
   margin-top: 10px;
-  overflow: hidden; }
+  background-color: white; }
   .resultscontainer .td-name {
     font-size: xx-large;
-    text-align: center;
-    min-width: 24rem;
-    bottom: 49px;
-    position: relative; }
+    text-align: center; }
   .resultscontainer .td-address {
-    text-align: center;
-    min-width: 40%;
-    border-left: solid gray 2px;
-    border-right: solid gray 2px;
-    color: white;
-    background-color: #1f5177; }
+    text-align: center; }
   .resultscontainer .td-phone {
-    text-align: center;
-    min-width: 40%; }
+    text-align: center; }
   .resultscontainer .td-img {
-    max-width: 10%;
     max-height: 170px;
-    width: 200px;
     margin-left: auto;
-    margin-right: auto;
-    background-color: #1f5177;
-    border-right: solid gray 2px; }
+    margin-right: auto; }
   .resultscontainer .img {
-    position: relative;
     width: 200px;
     height: 170px;
     border-radius: 20px;
-    margin: 5px; }
+    margin: 5px;
+    border: solid #4c4c4c 2px; }
 
 /* #mapResults {
     width: 100%;
@@ -203,5 +189,48 @@ body {
 #map {
   min-height: 640px;
   box-shadow: 0px 2px 15px black; }
+
+/*-------------------------------------@media*/
+@media only screen and (min-width: 800px) {
+  .resultscontainer {
+    display: flow-root;
+    border: solid #4d98df 1px;
+    border-bottom: solid #4d98df 4px;
+    background-color: white;
+    border-radius: 20px;
+    width: 100%;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    overflow: hidden; }
+    .resultscontainer .td-name {
+      font-size: xx-large;
+      text-align: center;
+      min-width: 24rem;
+      bottom: 49px;
+      position: relative; }
+    .resultscontainer .td-address {
+      text-align: center;
+      min-width: 40%;
+      border-left: solid gray 2px;
+      border-right: solid gray 2px;
+      color: white;
+      background-color: #1f5177; }
+    .resultscontainer .td-phone {
+      text-align: center;
+      min-width: 40%; }
+    .resultscontainer .td-img {
+      max-width: 10%;
+      max-height: 170px;
+      width: 200px;
+      margin-left: auto;
+      margin-right: auto;
+      background-color: #1f5177;
+      border-right: solid gray 2px; }
+    .resultscontainer .img {
+      position: relative;
+      width: 200px;
+      height: 170px;
+      border-radius: 20px;
+      margin: 5px; } }
 
 /*# sourceMappingURL=style.css.map */
