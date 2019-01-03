@@ -46,7 +46,7 @@ function onPlaceChanged() {
     searchLodging();
   }
   else {
-    document.getElementById('autocomplete').placeholder = 'Enter a city';
+    document.getElementById('locationSearch').placeholder = 'Enter a city';
   }
 }
 
@@ -60,10 +60,9 @@ function searchLodging() {
   };
   searchNearby();
 } else {
-  alert('Please type a location!');
+    alert('Please type a location!');
   } 
 }
-
 
 // Search for POI's from the dropdown within the viewpoint of the map.
 function searchPOI() {
@@ -71,7 +70,6 @@ function searchPOI() {
     bounds: map.getBounds(),
     types: [document.getElementById('poi').value]
   };
-  //clearNavMarkers();
   searchNearby();
 }
 
@@ -92,7 +90,7 @@ function searchNearby() {
           animation: google.maps.Animation.DROP,
           icon: markerIcon
         });
-        // If the user clicks a hotel marker, show the details of that hotel
+        // If the user clicks a marker, this show the details of that location
         // in an info window.
         markers[i].placeResult = results[i];
         google.maps.event.addListener(markers[i], 'click', showInfoWindow);
@@ -206,25 +204,24 @@ function buildIWContent(place) {
       fullUrl = website;
     }
     document.getElementById('iw-website-row').style.display = '';
-    document.getElementById('iw-website').textContent = website;
+    document.getElementById('iw-website').innerHTML = '<a href="' + website +
+    '" target="_blank">' + website + '</a>';
   }
   else {
     document.getElementById('iw-website-row').style.display = 'none';
   }
 }
 
-
-
 //-------------***** print results to table in html *****-------------
 
-function addResult(result, i) {
-  places.getDetails({ placeId: result.place_id },
+function addResult(results, i) {
+  places.getDetails({ placeId: results.place_id },
     function(place, status) {
       if (status !== google.maps.places.PlacesServiceStatus.OK) {
         return;
       }
 
-      var results = document.getElementById('mapResultsFull');
+      var result = document.getElementById('mapResultsFull');
       var markerLetter = String.fromCharCode('A'.charCodeAt(0) + (i % 26));
       var markerIcon = MARKER_PATH + markerLetter + '.png';
       var tr = document.createElement('resultsContainer');
@@ -235,16 +232,26 @@ function addResult(result, i) {
         map.setZoom(12);
       };
 
-      console.log(place);
+     // console.log(results);
 
       var name = document.createTextNode(place.name);
-      var address = document.createTextNode(place.formatted_address);
+      var address;
+      var photo;
       var phoneNumber = document.createTextNode(place.formatted_phone_number);
-      //var nameHeader = document.createTextNode("Name: ");
       var addressHeader = document.createTextNode("Address: ");
       var phoneNumberHeader = document.createTextNode("Phone Number: ");
-      var photo = place.photos[0].getUrl({ 'maxWidth': 250, 'maxHeight': 250 });
+
+      if(!place.photos){
+        photo = markerIcon;
+      } else {
+        photo = place.photos[0].getUrl({ 'maxWidth': 250, 'maxHeight': 250 });
+      }
       
+      if(!place.formatted_address){
+        address = place.vicinity;
+      } else {
+        address = document.createTextNode(place.formatted_address);
+      }
       
       var iconTd = document.createElement('td');
       var nameTd = document.createElement('td');
@@ -262,7 +269,6 @@ function addResult(result, i) {
       tr.setAttribute('class', 'resultscontainer');
 
       iconTd.appendChild(icon);
-      //nameTd.appendChild(nameHeader);
       nameTd.appendChild(name);
       addressTd.appendChild(addressHeader);
       addressTd.appendChild(address);
@@ -272,7 +278,10 @@ function addResult(result, i) {
       tr.appendChild(nameTd);
       tr.appendChild(addressTd);
       tr.appendChild(phoneTd);
-      results.appendChild(tr);
+      result.appendChild(tr);
+      
+      console.log(results);
+      
     });
 }
 
@@ -290,7 +299,6 @@ function clearResults() {
 function setRoute() {
     clearMarkers();
     clearResults();
-    //removeResultTable();
     dirService = new google.maps.DirectionsService();
     dirDisplay = new google.maps.DirectionsRenderer({ map });
     dirDisplay.setPanel(document.getElementById('mapResultsFull'));
@@ -320,5 +328,7 @@ function setRoute() {
 function clearNavMarkers() {
     dirDisplay.setMap(null);
     dirDisplay.setPanel(null);
-    //resetData();
+    finishID.value = "";
+    resetSearch();
+    searchNearby();
 }
