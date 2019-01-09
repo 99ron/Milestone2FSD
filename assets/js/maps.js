@@ -1,4 +1,4 @@
-var map, places, infoWindow, dirService, dirDisplay, startID, finishID;
+var map, places, infoWindow, dirService, dirDisplay, startID, finishID, place;
 var search = {};
 var markers = [];
 var autocomplete;
@@ -74,7 +74,7 @@ function searchPOI() {
 }
 
 //Searches with the types as selected above.
-function searchNearby() {
+function searchNearby(place) {
   places.nearbySearch(search, function(results, status) {
     if (status === google.maps.places.PlacesServiceStatus.OK) {
       clearResults();
@@ -84,21 +84,42 @@ function searchNearby() {
       for (var i = 0; i < results.length; i++) {
         var markerLetter = String.fromCharCode('A'.charCodeAt(0) + (i % 26));
         var markerIcon = MARKER_PATH + markerLetter + '.png';
+        
+        //console.log(results);
+
         // Use marker animation to drop the icons incrementally on the map.
         markers[i] = new google.maps.Marker({
           position: results[i].geometry.location,
           animation: google.maps.Animation.DROP,
           icon: markerIcon
+
         });
         // If the user clicks a marker, this show the details of that location
         // in an info window.
         markers[i].placeResult = results[i];
         google.maps.event.addListener(markers[i], 'click', showInfoWindow);
         setTimeout(dropMarker(i), i * 100);
-        addResult(results[i], i);
+        getLocationInfo(results[i], i);
       }
+      
     }
   });
+}
+// This gets the results from the SearchPOI() and requests for more info, if it gets OVER QUERY LIMIT
+// then it'll try to get more details again until all 20 results are displayed. 
+function getLocationInfo(results, i) {
+  places.getDetails({ placeId: results.place_id },
+    function(place, status) {
+      console.log(status);
+      if (status === google.maps.GeocoderStatus.OK) {
+        addResult(results, i, place);
+      }
+      else {
+        if (status === google.maps.GeocoderStatus.OVER_QUERY_LIMIT) {
+          setTimeout(function() {getLocationInfo(results, i)}, 1000);
+        }
+      }
+    });
 }
 
 // Clears the markers from the map.
@@ -212,47 +233,46 @@ function buildIWContent(place) {
   }
 }
 
-//-------------***** print results to table in html *****-------------
+//-------------***** print results to the table *****-------------
 
-function addResult(results, i) {
-  places.getDetails({ placeId: results.place_id },
-    function(place, status) {
-      if (status !== google.maps.places.PlacesServiceStatus.OK) {
-        return;
-      }
+function addResult(results, i, place) {
+  var result = document.getElementById('mapResultsFull');
+  var markerLetter = String.fromCharCode('A'.charCodeAt(0) + (i % 26));
+  var markerIcon = MARKER_PATH + markerLetter + '.png';
+  var tr = document.createElement('resultsContainer');
 
-      var result = document.getElementById('mapResultsFull');
-      var markerLetter = String.fromCharCode('A'.charCodeAt(0) + (i % 26));
-      var markerIcon = MARKER_PATH + markerLetter + '.png';
-      var tr = document.createElement('resultsContainer');
-      //tr.style.backgroundColor = (i % 2 === 0 ? '#4d98df' : '#4c4c4c');
       tr.onclick = function() {
         google.maps.event.trigger(markers[i], 'click');
         map.panTo(place.geometry.location);
         map.setZoom(12);
       };
-
-     // console.log(results);
-
       var name = document.createTextNode(place.name);
       var address;
       var photo;
-      var phoneNumber = document.createTextNode(place.formatted_phone_number);
+      var phoneNumber; 
       var addressHeader = document.createTextNode("Address: ");
       var phoneNumberHeader = document.createTextNode("Phone Number: ");
 
-      if(!place.photos){
+      if (!place.photos) {
         photo = markerIcon;
-      } else {
+      }
+      else {
         photo = place.photos[0].getUrl({ 'maxWidth': 250, 'maxHeight': 250 });
       }
-      
-      if(!place.formatted_address){
-        address = place.vicinity;
-      } else {
+
+      if (!place.formatted_address) {
+        address = document.createTextNode(place.vicinity);
+      }
+      else {
         address = document.createTextNode(place.formatted_address);
       }
-      
+
+      if (!place.formatted_phone_number) {
+        phoneNumber = document.createTextNode("Not Available.");
+      } else {
+        phoneNumber = document.createTextNode(place.formatted_phone_number);
+      }
+
       var iconTd = document.createElement('td');
       var nameTd = document.createElement('td');
       var addressTd = document.createElement('td');
@@ -279,12 +299,8 @@ function addResult(results, i) {
       tr.appendChild(addressTd);
       tr.appendChild(phoneTd);
       result.appendChild(tr);
-      
-      console.log(results);
-      
-    });
 }
-
+ 
 // Empties the table out.
 function clearResults() {
   var results = document.getElementById('mapResultsFull');
@@ -293,7 +309,7 @@ function clearResults() {
   }
 }
 
-//****************SatNav Element******************//
+//****************Navigation Element******************//
 
 //Creates a function to set the route by driving method.
 function setRoute() {
