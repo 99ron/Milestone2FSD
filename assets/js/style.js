@@ -12,7 +12,20 @@ function resetData() {
     document.getElementById("isContainer-sH").style.display = "none";
     document.getElementsByClassName("satNav-Container")[0].style.display = "none";
     document.getElementById("isContainer-sPOI").style.display = "none";
-    
+    document.getElementById('navResults').style.display = "none";
+}
+
+function resetSearch() {
+    document.getElementById('mapResultsFull').style.display = "inline-block";
+    document.getElementsByClassName('selectedPOItb')[0].value = "";
+    document.getElementsByClassName("poiText-Container")[0].style.display = "none";
+    document.getElementById('navResults').style.display = "none";
+
+}
+
+function showNavResults() {
+    document.getElementById('navResults').style.display = "inline-block";
+    document.getElementById('mapResultsFull').style.display = "none";
 }
 
 function showMAP() {

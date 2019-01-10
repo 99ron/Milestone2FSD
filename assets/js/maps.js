@@ -99,7 +99,7 @@ function searchNearby(place) {
         markers[i].placeResult = results[i];
         google.maps.event.addListener(markers[i], 'click', showInfoWindow);
         setTimeout(dropMarker(i), i * 100);
-        getLocationInfo(results[i], i);
+        getLocationInfo(results[i], i, markerIcon);
       }
       
     }
@@ -107,16 +107,16 @@ function searchNearby(place) {
 }
 // This gets the results from the SearchPOI() and requests for more info, if it gets OVER QUERY LIMIT
 // then it'll try to get more details again until all 20 results are displayed. 
-function getLocationInfo(results, i) {
+function getLocationInfo(results, i, markerIcon) {
   places.getDetails({ placeId: results.place_id },
     function(place, status) {
       console.log(status);
       if (status === google.maps.GeocoderStatus.OK) {
-        addResult(results, i, place);
+        addResult(results, i, place, markerIcon);
       }
       else {
         if (status === google.maps.GeocoderStatus.OVER_QUERY_LIMIT) {
-          setTimeout(function() {getLocationInfo(results, i)}, 1000);
+          setTimeout(function() {getLocationInfo(results, i, markerIcon)}, 1000);
         }
       }
     });
@@ -234,11 +234,10 @@ function buildIWContent(place) {
 }
 
 //-------------***** print results to the table *****-------------
-
-function addResult(results, i, place) {
+// Once the function to request more info on found locations has been processed
+// it gets put through to here to get the required information and displayed.
+function addResult(results, i, place, markerIcon) {
   var result = document.getElementById('mapResultsFull');
-  var markerLetter = String.fromCharCode('A'.charCodeAt(0) + (i % 26));
-  var markerIcon = MARKER_PATH + markerLetter + '.png';
   var tr = document.createElement('resultsContainer');
 
       tr.onclick = function() {
@@ -252,21 +251,22 @@ function addResult(results, i, place) {
       var phoneNumber; 
       var addressHeader = document.createTextNode("Address: ");
       var phoneNumberHeader = document.createTextNode("Phone Number: ");
-
+      
+      // Checks if location has the photo array. If not then uses the markerIcon.
       if (!place.photos) {
         photo = markerIcon;
       }
       else {
         photo = place.photos[0].getUrl({ 'maxWidth': 250, 'maxHeight': 250 });
       }
-
+      // Checks if location has formatted address, if not then gets the road name.
       if (!place.formatted_address) {
         address = document.createTextNode(place.vicinity);
       }
       else {
         address = document.createTextNode(place.formatted_address);
       }
-
+      // Checks if location has a phone number and if not then to display text.
       if (!place.formatted_phone_number) {
         phoneNumber = document.createTextNode("Not Available.");
       } else {
@@ -303,9 +303,13 @@ function addResult(results, i, place) {
  
 // Empties the table out.
 function clearResults() {
-  var results = document.getElementById('mapResultsFull');
-  while (results.childNodes[0]) {
-    results.removeChild(results.childNodes[0]);
+  var mapResults = document.getElementById('mapResultsFull');
+  var navResults = document.getElementById('navResults');
+  while (mapResults.childNodes[0]) {
+    mapResults.removeChild(mapResults.childNodes[0]);
+  }
+  while (navResults.childNodes[0]){
+    navResults.remove(navResults.childNodes[0]);
   }
 }
 
@@ -315,9 +319,10 @@ function clearResults() {
 function setRoute() {
     clearMarkers();
     clearResults();
+    showNavResults();
     dirService = new google.maps.DirectionsService();
     dirDisplay = new google.maps.DirectionsRenderer({ map });
-    dirDisplay.setPanel(document.getElementById('mapResultsFull'));
+    dirDisplay.setPanel(document.getElementById('navResults'));
   
     var start = startID;
     var end = finishID;
@@ -327,9 +332,6 @@ function setRoute() {
         destination: end,
         travelMode: 'DRIVING',
     };
-
-    //console.log(request);
-
     dirService.route(request, function(result, status) {
         if (status == 'OK') {
             dirDisplay.setDirections(result);
@@ -340,7 +342,8 @@ function setRoute() {
     });
 }
 
-// Clears the navPoints
+
+// Clears the navPoints and removes some of the display.
 function clearNavMarkers() {
     dirDisplay.setMap(null);
     dirDisplay.setPanel(null);
