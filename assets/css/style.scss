@@ -1,5 +1,6 @@
 /*--------------------------------------------Colours*/
-
+// Setting templates for colour schemes, width's and fonts for the 
+// website in a easy location to update several elements at once.
 $bgText-color: #4c4c4c;
 $bodyBackgroundColor: white;
 $background-color: #4d98df;
@@ -31,12 +32,14 @@ header {
     margin-left: 50px;
 }
 
+// Sets the header background image.
 .header-color {
     background-image: linear-gradient(rgba(44, 52, 80, 0.5), rgba(44, 62, 80, 0.5)), url("/assets/images/bannerCloud.jpg");
     background-size: cover;
     background-repeat: no-repeat;
 }
 
+// Sets the font colour to white.
 .input-header,
 .poiNearby-header,
 .poiText-p,
@@ -72,6 +75,7 @@ body {
     background-color: $bodyBackgroundColor;
 }
 
+// Adds a fine, transparent layer over the background colour.
 .transparent-background {
     background-color: rgba(0, 0, 0, 0.1);
 }
@@ -88,10 +92,12 @@ body {
     border-bottom: solid $background-color 2px;
 }
 
+// This is used for majority of the containers for nice spacing.
 .section-padding {
     padding: 10px 5%;
 }
 
+// Primary button colour.
 .btn-color {
     background-color: $background-color;
     color: $font-color;
@@ -108,6 +114,7 @@ body {
     width: 100%;
 }
 
+// Sets the listed containers to be hidden when page is first loaded.
 #isContainer-sH,
 #isContainer-sPOI {
     display: none;
@@ -121,12 +128,18 @@ body {
     padding-top: 1rem;
 }
 
+#map {
+    min-height: 640px;
+    box-shadow: 0px 2px 15px black;
+}
 
 #locationSearch {
     height: 50px;
     font-size: 18pt;
 }
 
+// This is a format for the results table used with the found
+// location via searchNearby() function. 
 #mapResultsFull {
     width: 100%;
     border-collapse: collapse;
@@ -137,6 +150,8 @@ body {
     overflow-x: hidden;
 }
 
+// This is the format for the navigation results used with the 
+// written directions from the Navigation function.
 #navResults {
     width: 100%;
     border-collapse: collapse;
@@ -147,6 +162,8 @@ body {
     overflow-x: hidden;
 }
 
+// This is placed within the #mapResultsFull container giving each found result
+// /location it's own box, with the name, address and image being nicely displayed. 
 .resultscontainer {
     display: inline-grid;
     border: solid $background-color 1px;
@@ -160,12 +177,10 @@ body {
     .td-name {
         font-size: xx-large;
         text-align: center;
-
     }
 
     .td-address {
         text-align: center;
-
     }
 
     .td-phone {
@@ -188,6 +203,9 @@ body {
     }
 }
 
+// When the user clicks on a marker, information is displayed. When the screen
+// size is set to a phone display the information is too wide, this breaks the 
+// words down so it's readable.
 #infoMapWindow {
     hyphens: auto;
 }
@@ -231,7 +249,7 @@ body {
 
 /*-------------------------------------Other*/
 
-// used for formatting the text results for the navigation.
+// Used for formatting the text results for the navigation box.
 .adp {
     background-color: white;
     border: solid $background-color 2px;
@@ -251,12 +269,12 @@ body {
     border: solid 2px $border-color;
 }
 
+// This sets the icon size for the map.
 .placeIcon {
     width: 34px;
     height: 34px;
     margin: 4px;
 }
-
 
 .iw_table_row {
     height: 18px;
@@ -271,22 +289,9 @@ body {
     text-align: right;
 }
 
-
-/*-------------------------------------MAP*/
-
-#mapResults {
-    box-shadow: 0px 0px 15px black;
-    border: solid black 2px;
-}
-
-#map {
-    min-height: 640px;
-    box-shadow: 0px 2px 15px black;
-}
-
-
 /*-------------------------------------@media*/
-
+// Changes the format for the search results from the found locations
+// when the screen size is bigger than 1150px.
 @media only screen and (min-width: 1150px) {
 
 .resultscontainer {
