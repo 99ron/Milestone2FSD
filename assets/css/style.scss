@@ -32,12 +32,15 @@ header {
 }
 
 .header-color {
-    background-image: linear-gradient(rgba(44,52,80,0.5), rgba(44,62,80,0.5)), url("/assets/images/bannerCloud.jpg");
+    background-image: linear-gradient(rgba(44, 52, 80, 0.5), rgba(44, 62, 80, 0.5)), url("/assets/images/bannerCloud.jpg");
     background-size: cover;
     background-repeat: no-repeat;
 }
 
-.input-header, .poiNearby-header, .poiText-p, .satNav-header {
+.input-header,
+.poiNearby-header,
+.poiText-p,
+.satNav-header {
     color: $font-color;
 }
 
@@ -65,7 +68,9 @@ header {
 
 /*-------------------------------------Body*/
 
-body {background-color: $bodyBackgroundColor;}
+body {
+    background-color: $bodyBackgroundColor;
+}
 
 .transparent-background {
     background-color: rgba(0, 0, 0, 0.1);
@@ -97,19 +102,14 @@ body {background-color: $bodyBackgroundColor;}
     color: $font-color;
 }
 
-.btn-satNav, .btn-resetNav, .isContainer--width {
+.btn-satNav,
+.btn-resetNav,
+.isContainer--width {
     width: 100%;
 }
 
-/* .poiShow-Container, .poiText-Container, .mapResults-Container, .interestSelectedInfo, .satNav-Container {
-    display: none;
-} */
-
-/*#MAP {
-    visibility: hidden;
-} */
-
-#isContainer-sH, #isContainer-sPOI {
+#isContainer-sH,
+#isContainer-sPOI {
     display: none;
 }
 
@@ -121,12 +121,23 @@ body {background-color: $bodyBackgroundColor;}
     padding-top: 1rem;
 }
 
-/* #resultsTable {
-    border-collapse: collapse;
-    width: 100%;
-} */
+
+#locationSearch {
+    height: 50px;
+    font-size: 18pt;
+}
 
 #mapResultsFull {
+    width: 100%;
+    border-collapse: collapse;
+    height: 800px;
+    overflow: auto;
+    top: 0px;
+    cursor: pointer;
+    overflow-x: hidden;
+}
+
+#navResults {
     width: 100%;
     border-collapse: collapse;
     height: 800px;
@@ -145,48 +156,41 @@ body {background-color: $bodyBackgroundColor;}
     margin-bottom: 10px;
     margin-top: 10px;
     background-color: $bodyBackgroundColor;
-    
+
     .td-name {
         font-size: xx-large;
         text-align: center;
 
     }
-    
+
     .td-address {
         text-align: center;
 
     }
-    
+
     .td-phone {
         text-align: center;
-
+        margin-bottom: 10px;
     }
-    
+
     .td-img {
         max-height: 170px;
         margin-left: auto;
         margin-right: auto;
-        }
-    
-   .img {
+    }
+
+    .img {
         width: 200px;
         height: 170px;
         border-radius: 20px;
         margin: 5px;
         border: solid $bgText-color 2px;
-        }
-}    
+    }
+}
 
-
-/* #mapResults {
-    width: 100%;
-    height: 440px;
-    overflow: auto;
-    left: 442px;
-    top: 0px;
-    cursor: pointer;
-    overflow-x: hidden;
-} */
+#infoMapWindow {
+    hyphens: auto;
+}
 
 .mapResults-Container {
     margin-top: 20px;
@@ -199,11 +203,11 @@ body {background-color: $bodyBackgroundColor;}
 
 .interestSelected-Container {
     padding-top: 10px;
-    
+
     .selectedHotelTB {
         width: $tbWidth;
     }
-    
+
     .selectedPOItb {
         width: $tbWidth;
     }
@@ -215,17 +219,29 @@ body {background-color: $bodyBackgroundColor;}
 
 .satNav-Container {
     padding-top: 10px;
-    
+
     .btn-satNav {
         width: $tbWidth;
     }
-    
+
     .btn-resetNav {
         width: $tbWidth;
     }
 }
 
 /*-------------------------------------Other*/
+
+// used for formatting the text results for the navigation.
+.adp {
+    background-color: white;
+    border: solid $background-color 2px;
+    border-radius: 12px;
+    padding: 10px;
+}
+
+.adp table {
+    width: 100%;    
+}
 
 .nav-border {
     border-bottom: solid 2px $border-color;
@@ -271,7 +287,7 @@ body {background-color: $bodyBackgroundColor;}
 
 /*-------------------------------------@media*/
 
-@media only screen and (min-width: 800px){
+@media only screen and (min-width: 1150px) {
 
 .resultscontainer {
     display: flow-root;
@@ -283,29 +299,33 @@ body {background-color: $bodyBackgroundColor;}
     margin-bottom: 10px;
     margin-top: 10px;
     overflow: hidden;
-    
+    table-layout: fixed;
+
     .td-name {
         font-size: xx-large;
         text-align: center;
         min-width: 24rem;
+        max-width: 24rem;
         bottom: 49px;
         position: relative;
     }
-    
+
     .td-address {
         text-align: center;
-        min-width: 40%;
+        width: 660px;
+        min-width: 180px;
         border-left: solid gray 2px;
         border-right: solid gray 2px;
         color: white;
         background-color: #1f5177;
     }
-    
+
     .td-phone {
         text-align: center;
-        min-width: 40%;
+        min-width: 130px;
+        width: 595px;
     }
-    
+
     .td-img {
         max-width: 10%;
         max-height: 170px;
@@ -314,14 +334,14 @@ body {background-color: $bodyBackgroundColor;}
         margin-right: auto;
         background-color: #1f5177;
         border-right: solid gray 2px;
-        }
-    
-   .img {
+    }
+
+    .img {
         position: relative;
         width: 200px;
         height: 170px;
         border-radius: 20px;
         margin: 5px;
-        }
-} 
+    }
+}
 }
