@@ -1,10 +1,9 @@
-var map, places, infoWindow, dirService, dirDisplay, startID, finishID, place;
+var map, places, infoWindow, dirService, dirDisplay, startID, finishID, place, google;
 var search = {};
 var markers = [];
 var autocomplete;
 var MARKER_PATH = 'http://www.google.com/mapfiles/kml/paddle/';
 var hostnameRegexp = new RegExp('^https?://.+?/');
-
 
 
 // Creates the map and associates it to the ID 'map'.
@@ -19,7 +18,7 @@ function initMap() {
   });
 
   infoWindow = new google.maps.InfoWindow({
-    content: document.getElementById('info-content')
+    content: document.getElementById('infoMapWindow')
   });
   // Resets textboxes and drop down list.
   resetData();
@@ -33,14 +32,13 @@ function initMap() {
   autocomplete.addListener('place_changed', onPlaceChanged);
 }
 
-// When the user types a location in, it then zooms the map on the location specified.
+// When the user types a location, it then zooms the map on the location found.
 function onPlaceChanged() {
   var place = autocomplete.getPlace();
   if (place.geometry) {
     map.panTo(place.geometry.location);
     map.setZoom(12);
     // Sets the class's from display =none to =inline block.
-    // Changes the class to fit on the page. 
     showMAP();
     showDisplayOne();
     searchLodging();
@@ -53,15 +51,16 @@ function onPlaceChanged() {
 // Search for hotels within the viewport of the map only if a location is in the
 // search box.
 function searchLodging() {
-  if (document.getElementById('locationSearch').value !== "") { 
-  search = {
-    bounds: map.getBounds(),
-    types: ['lodging']
-  };
-  searchNearby();
-} else {
+  if (document.getElementById('locationSearch').value !== "") {
+    search = {
+      bounds: map.getBounds(),
+      types: ['lodging']
+    };
+    searchNearby();
+  }
+  else {
     alert('Please type a location!');
-  } 
+  }
 }
 
 // Search for POI's from the dropdown within the viewpoint of the map.
@@ -73,27 +72,27 @@ function searchPOI() {
   searchNearby();
 }
 
-//Searches with the types as selected above.
-function searchNearby(place) {
+//Searches with the types as selected above if both status is OK and results comes back with at least
+// one item, if not displays a message to the user.
+function searchNearby() {
   places.nearbySearch(search, function(results, status) {
-    if (status === google.maps.places.PlacesServiceStatus.OK) {
+    if (status === google.maps.places.PlacesServiceStatus.OK && results !== null) {
       clearResults();
       clearMarkers();
+
       // Create a marker for each hotel/POI found, and
       // assign a letter of the alphabet to each marker icon.
       for (var i = 0; i < results.length; i++) {
         var markerLetter = String.fromCharCode('A'.charCodeAt(0) + (i % 26));
         var markerIcon = MARKER_PATH + markerLetter + '.png';
-        
-        //console.log(results);
 
         // Use marker animation to drop the icons incrementally on the map.
         markers[i] = new google.maps.Marker({
           position: results[i].geometry.location,
           animation: google.maps.Animation.DROP,
           icon: markerIcon
-
         });
+
         // If the user clicks a marker, this show the details of that location
         // in an info window.
         markers[i].placeResult = results[i];
@@ -101,22 +100,25 @@ function searchNearby(place) {
         setTimeout(dropMarker(i), i * 100);
         getLocationInfo(results[i], i, markerIcon);
       }
-      
+    }
+    else {
+      alert('No places found for this type in this location, please try another!');
     }
   });
 }
-// This gets the results from the SearchPOI() and requests for more info, if it gets OVER QUERY LIMIT
-// then it'll try to get more details again until all 20 results are displayed. 
+
+
+// This gets the results from the SearchPOI() and requests for more info, if it gets OVER QUERY LIMIT status
+// then it'll wait 800ms until it tries to get more details again so all 20 results are displayed. 
 function getLocationInfo(results, i, markerIcon) {
   places.getDetails({ placeId: results.place_id },
     function(place, status) {
-      console.log(status);
       if (status === google.maps.GeocoderStatus.OK) {
         addResult(results, i, place, markerIcon);
       }
       else {
         if (status === google.maps.GeocoderStatus.OVER_QUERY_LIMIT) {
-          setTimeout(function() {getLocationInfo(results, i, markerIcon)}, 1000);
+          setTimeout(function() { getLocationInfo(results, i, markerIcon) }, 800);
         }
       }
     });
@@ -150,23 +152,25 @@ function showInfoWindow() {
       }
       infoWindow.open(map, marker);
       buildIWContent(place);
-      
+
       // Checks what the dropdown list is currently selected on and fills either
       // text boxes with the location's name.
       if (document.getElementById('poi').value === 'lodging') {
         document.getElementsByClassName('selectedHotelTB')[0].value =
           place.name,
+          // Stores address for Navigation.
           startID = place.formatted_address;
-          // Displays the text boxes for selected locations.
-          showDisplayTwo();
-          
+        // Displays the text boxes for selected locations.
+        showDisplayTwo();
+
       }
       else {
         document.getElementsByClassName('selectedPOItb')[0].value =
           place.name,
+          // Stores address for Navigation.
           finishID = place.formatted_address;
-          // Displays the POI textbox.
-          showDisplayFour();
+        // Displays the POI textbox.
+        showDisplayFour();
       }
       // if textbox ISN'T empty then display satnav btn.
       if (document.getElementsByClassName('selectedPOItb')[0].value !== "") {
@@ -183,7 +187,7 @@ function buildIWContent(place) {
   document.getElementById('iw-icon').innerHTML = '<img class="hotelIcon" ' +
     'src="' + place.icon + '"/>';
   document.getElementById('iw-url').innerHTML = '<b><a href="' + place.url +
-    '">' + place.name + '</a></b>';
+    '" target="_blank">' + place.name + '</a></b>';
   document.getElementById('iw-address').textContent = place.vicinity;
 
   if (place.formatted_phone_number) {
@@ -226,7 +230,7 @@ function buildIWContent(place) {
     }
     document.getElementById('iw-website-row').style.display = '';
     document.getElementById('iw-website').innerHTML = '<a href="' + website +
-    '" target="_blank">' + website + '</a>';
+      '" target="_blank">' + website + '</a>';
   }
   else {
     document.getElementById('iw-website-row').style.display = 'none';
@@ -234,81 +238,89 @@ function buildIWContent(place) {
 }
 
 //-------------***** print results to the table *****-------------
-// Once the function to request more info on found locations has been processed
-// it gets put through to here to get the required information and displayed.
+
+// Once the function to request more info on found locations has been processed,
+// it gets put through to here to get be displayed.
 function addResult(results, i, place, markerIcon) {
   var result = document.getElementById('mapResultsFull');
   var tr = document.createElement('resultsContainer');
 
-      tr.onclick = function() {
-        google.maps.event.trigger(markers[i], 'click');
-        map.panTo(place.geometry.location);
-        map.setZoom(12);
-      };
-      var name = document.createTextNode(place.name);
-      var address;
-      var photo;
-      var phoneNumber; 
-      var addressHeader = document.createTextNode("Address: ");
-      var phoneNumberHeader = document.createTextNode("Phone Number: ");
-      
-      // Checks if location has the photo array. If not then uses the markerIcon.
-      if (!place.photos) {
-        photo = markerIcon;
-      }
-      else {
-        photo = place.photos[0].getUrl({ 'maxWidth': 250, 'maxHeight': 250 });
-      }
-      // Checks if location has formatted address, if not then gets the road name.
-      if (!place.formatted_address) {
-        address = document.createTextNode(place.vicinity);
-      }
-      else {
-        address = document.createTextNode(place.formatted_address);
-      }
-      // Checks if location has a phone number and if not then to display text.
-      if (!place.formatted_phone_number) {
-        phoneNumber = document.createTextNode("Not Available.");
-      } else {
-        phoneNumber = document.createTextNode(place.formatted_phone_number);
-      }
+  tr.onclick = function() {
+    google.maps.event.trigger(markers[i], 'click');
+    map.panTo(place.geometry.location);
+    map.setZoom(13);
+  };
+  var name = document.createTextNode(place.name);
+  var address;
+  var photo;
+  var phoneNumber;
+  var addressHeader = document.createTextNode("Address: ");
+  var phoneNumberHeader = document.createTextNode("Phone Number: ");
 
-      var iconTd = document.createElement('td');
-      var nameTd = document.createElement('td');
-      var addressTd = document.createElement('td');
-      var phoneTd = document.createElement('td');
-      var icon = document.createElement('img');
-      icon.src = photo;
+  // Checks if location has the photo array. If not then uses the markerIcon.
+  if (!place.photos) {
+    photo = markerIcon;
+  }
+  else {
+    photo = place.photos[0].getUrl({ 'maxWidth': 250, 'maxHeight': 250 });
+  }
+  // Checks if location has formatted address, if not then gets the road name.
+  if (!place.formatted_address) {
+    address = document.createTextNode(place.vicinity);
+  }
+  else {
+    address = document.createTextNode(place.formatted_address);
+  }
+  // Checks if location has a phone number and if not then to display text.
+  if (!place.formatted_phone_number) {
+    phoneNumber = document.createTextNode("Not Available.");
+  }
+  else {
+    phoneNumber = document.createTextNode(place.formatted_phone_number);
+  }
 
-      icon.setAttribute('class', 'img');
-      icon.setAttribute('className', 'img');
-      iconTd.setAttribute('class', 'td-img');
-      nameTd.setAttribute('class', 'td-name');
-      addressTd.setAttribute('class', 'td-address');
-      phoneTd.setAttribute('class', 'td-phone');
-      tr.setAttribute('class', 'resultscontainer');
+  // From this point it sets each information gathered to it's own "cell", 
+  // apart from the icon which creates an image element.
+  var iconTd = document.createElement('td');
+  var nameTd = document.createElement('td');
+  var addressTd = document.createElement('td');
+  var phoneTd = document.createElement('td');
+  var icon = document.createElement('img');
+  icon.src = photo;
 
-      iconTd.appendChild(icon);
-      nameTd.appendChild(name);
-      addressTd.appendChild(addressHeader);
-      addressTd.appendChild(address);
-      phoneTd.appendChild(phoneNumberHeader);
-      phoneTd.appendChild(phoneNumber);
-      tr.appendChild(iconTd);
-      tr.appendChild(nameTd);
-      tr.appendChild(addressTd);
-      tr.appendChild(phoneTd);
-      result.appendChild(tr);
+  // From here we assign the created elements above with an appropriate 
+  // attribute names so we can associate styles to them.
+  icon.setAttribute('class', 'img');
+  icon.setAttribute('className', 'img');
+  iconTd.setAttribute('class', 'td-img');
+  nameTd.setAttribute('class', 'td-name');
+  addressTd.setAttribute('class', 'td-address');
+  phoneTd.setAttribute('class', 'td-phone');
+  tr.setAttribute('class', 'resultscontainer');
+
+  // Here combines the gathered details into their allocated cells and pushed
+  // into a table.
+  iconTd.appendChild(icon);
+  nameTd.appendChild(name);
+  addressTd.appendChild(addressHeader);
+  addressTd.appendChild(address);
+  phoneTd.appendChild(phoneNumberHeader);
+  phoneTd.appendChild(phoneNumber);
+  tr.appendChild(iconTd);
+  tr.appendChild(nameTd);
+  tr.appendChild(addressTd);
+  tr.appendChild(phoneTd);
+  result.appendChild(tr);
 }
- 
-// Empties the table out.
+
+// Resets both result and nav tables to null.
 function clearResults() {
   var mapResults = document.getElementById('mapResultsFull');
   var navResults = document.getElementById('navResults');
   while (mapResults.childNodes[0]) {
     mapResults.removeChild(mapResults.childNodes[0]);
   }
-  while (navResults.childNodes[0]){
+  while (navResults.childNodes[0]) {
     navResults.remove(navResults.childNodes[0]);
   }
 }
@@ -317,37 +329,48 @@ function clearResults() {
 
 //Creates a function to set the route by driving method.
 function setRoute() {
-    clearMarkers();
-    clearResults();
-    showNavResults();
-    dirService = new google.maps.DirectionsService();
-    dirDisplay = new google.maps.DirectionsRenderer({ map });
-    dirDisplay.setPanel(document.getElementById('navResults'));
+  clearMarkers();
+  clearResults();
+  showNavResults();
+  dirService = new google.maps.DirectionsService();
+  dirDisplay = new google.maps.DirectionsRenderer({ map });
+  dirDisplay.setPanel(document.getElementById('navResults'));
   
-    var start = startID;
-    var end = finishID;
-
-    var request = {
-        origin: start,
-        destination: end,
-        travelMode: 'DRIVING',
-    };
-    dirService.route(request, function(result, status) {
-        if (status == 'OK') {
-            dirDisplay.setDirections(result);
-        } else {
-            window.alert('Directions request failed due to ' + status + '\n Try searching for another location!');
-            searchPOI();
-          }
-    });
+  // Uses the formatted address from the previous chosen locations by the user 
+  // so it can be referenced for the navigation API.
+  var start = startID;
+  var end = finishID;
+  
+  // Does a quick check to see if an address is in both variables and if not
+  // simply displays a message to the user to select a location.
+  if (startID == null || finishID == null) {
+    alert('Please select locations to travel to and from.');
+    searchPOI();
+  } else {
+  var request = {
+    origin: start,
+    destination: end,
+    travelMode: 'DRIVING',
+  };
+  dirService.route(request, function(result, status) {
+    if (status == 'OK') {
+      dirDisplay.setDirections(result);
+    }
+    else {
+      window.alert('Directions request failed due to ' + status + '\n Try searching for another location!');
+      resetSearch();
+      searchPOI();
+    }
+  });
+  }
 }
 
-
-// Clears the navPoints and removes some of the display.
+// Clears the navPoints and removes some of the elements.
 function clearNavMarkers() {
-    dirDisplay.setMap(null);
-    dirDisplay.setPanel(null);
-    finishID.value = "";
-    resetSearch();
-    searchNearby();
+  dirDisplay.setMap(null);
+  dirDisplay.setPanel(null);
+  finishID= null;
+  resetSearch();
+  searchNearby();
+  map.setZoom(12);
 }
