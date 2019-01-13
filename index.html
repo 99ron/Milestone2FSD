@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css" />
     <link rel="stylesheet" href="assets/css/style.css" type="text/css" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="assets/js/style.js"></script>
     <script src="assets/js/maps.js"></script>
     <title>POInter</title>
@@ -17,8 +16,8 @@
 <body onload="resetData()">
     <header class="container-fluid header-color nav-border">
         <div class="row">
-            <a class="mainLogo--center" href="index.html" alt="Holiday Home!">
-                <img class="mainLogo" src="./assets/images/3.png">
+            <a class="mainLogo--center" href="index.html">
+                <img class="mainLogo" src="./assets/images/3.png" alt="Holiday Home!">
             </a>
         </div>
     </header>
@@ -31,7 +30,7 @@
                         <h2>Enter a City below...</h2>
                     </div>
                     <div id="inputBox" class="input-group input-group-sm mb-3">
-                        <input id="locationSearch" type="text" class="form-control" placeholder="Search for a location..." aria-describedby="basic-addon2" required>
+                        <input id="locationSearch" type="text" class="form-control" placeholder="Search for a location..." aria-describedby="inputBox" required>
                         <div class="input-group-append">
                             <button class="btn btn-outline-secondary" type="button" onclick="searchLodging()">Search</button>
                         </div>
@@ -47,7 +46,7 @@
                         <h2>Point of interests nearby:</h2>
                     </div>
                     <div id="controls" class="poiControl">
-                        <select class="btn btn-secondary dropdown-toggle btn-color" type="button" id="poi" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onchange="searchPOI()">
+                        <select class="btn btn-secondary dropdown-toggle btn-color"  id="poi" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onchange="searchPOI()">
                                 <option value='lodging'>Lodgings</option>
                                 <option value="amusement_park">Amusement Park</option>
                                 <option value="aquarium">Aquarium</option>
@@ -63,13 +62,12 @@
                     </div>
                     <!--Displays found results. -->
                     <div id="poiNearby">
-                        <table id="poiResultsTable">
                             <table id="poiResults"></table>
-                        </table>
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 poiText-Container">
                     <p class="poiText-p"> Once you've chosen a destination. Click on the button and choose a point of interest which will display all that are nearby on the map. If you move the map you can click on the Update button to refresh the list of POI nearby.</p>
+                    <p class="poiText-p">Remember, once you've chosen a lodge and POI from the drop down list, you can get navigational instructions to get there by pressing the 'Navigation' button at the bottom of the page.</p>
                 </div>
             </div>
         </div>
@@ -86,10 +84,9 @@
                 <!--This is where the script targets to display the results -->
                 <div id="navResults" class="section-padding mapResults-Container col-xs-12 col-sm-12 col-md-12 col-lg-12"></div>
                 <div id="mapResultsFull" class="section-padding mapResults-Container col-xs-12 col-sm-12 col-md-12 col-lg-12"></div>
-                
                 <!--The layout for the infoWindow displayed on the map -->
                 <div style="display: none">
-                    <div id="info-content">
+                    <div id="infoMapWindow">
                         <table>
                             <tr id="iw-url-row" class="iw_table_row">
                                 <td id="iw-icon" class="iw_table_icon"></td>
@@ -122,14 +119,14 @@
                 <div id="isContainer" class="col-xs-12 col-sm-8 col-md-8 col-lg-8 interestSelected-Container">
                     <div id="isContainer-sH" class="input-group mb-3">
                         <div class="input-group-prepend isContainer--width">
-                            <span class="input-group-text" id="basic-addon1">Hotel:</span>
-                            <input type="text" class="selectedHotelTB" placeholder=" " aria-label="Hotel" aria-describedby="hotelSelectedTB" readonly>
+                            <span class="input-group-text">Hotel:</span>
+                            <input type="text" class="selectedHotelTB" placeholder=" " aria-label="Hotel" aria-describedby="isContainer-sH" readonly>
                         </div>
                     </div>
                     <div id="isContainer-sPOI" class="input-group mb-3">
                         <div class="input-group-prepend isContainer--width">
-                            <span class="input-group-text" id="basic-addon1">POI:</span>
-                            <input type="text" class="selectedPOItb" placeholder=" " aria-label="Hotel" aria-describedby="poiSelectedTB" readonly>
+                            <span class="input-group-text">POI:</span>
+                            <input type="text" class="selectedPOItb" placeholder=" " aria-label="Hotel" aria-describedby="isContainer-sPOI" readonly>
                         </div>
                     </div>
                 </div>
