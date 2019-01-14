@@ -1,3 +1,6 @@
+// Setting the functions as global as they're fetched from another JS file.
+/* global resetData, showMAP, showDisplayOne, showDisplayTwo, showDisplayThree, showDisplayFour, showNavResults, resetSearch,  */
+
 var map, places, infoWindow, dirService, dirDisplay, startID, finishID, place, google;
 var search = {};
 var markers = [];
