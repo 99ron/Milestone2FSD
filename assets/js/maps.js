@@ -79,7 +79,7 @@ function searchNearby() {
     if (status === google.maps.places.PlacesServiceStatus.OK && results !== null) {
       clearResults();
       clearMarkers();
-
+      
       // Create a marker for each hotel/POI found, and
       // assign a letter of the alphabet to each marker icon.
       for (var i = 0; i < results.length; i++) {
@@ -345,6 +345,7 @@ function setRoute() {
   // simply displays a message to the user to select a location.
   if (startID == null || finishID == null) {
     alert('Please select locations to travel to and from.');
+    resetSearch();
     searchPOI();
   } else {
   var request = {
