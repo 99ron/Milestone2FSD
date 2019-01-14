@@ -120,7 +120,8 @@ body {
   width: 100%;
   margin-bottom: 10px;
   margin-top: 10px;
-  background-color: white; }
+  background-color: white;
+  box-shadow: 0px 0px 4px black; }
   .resultscontainer .td-name {
     font-size: xx-large;
     text-align: center; }
