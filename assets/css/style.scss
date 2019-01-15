@@ -128,6 +128,11 @@ body {
     padding-top: 1rem;
 }
 
+// Sets the width for Hotel and POI labels.
+.input-group-text {
+    min-width: 65px;
+}
+
 #map {
     min-height: 640px;
     box-shadow: 0px 2px 15px black;
@@ -139,7 +144,7 @@ body {
 }
 
 // This is a format for the results table used with the found
-// location via searchNearby() function. 
+// location via searchNearby() function. Also hides the scoll bar. 
 #mapResultsFull {
     width: 100%;
     border-collapse: collapse;
@@ -148,8 +153,17 @@ body {
     top: 0px;
     cursor: pointer;
     overflow-x: hidden;
+    box-shadow: inset 0px 0px 9px rgba(0,0,0,0.9);
+    border: solid grey 2px;
+    border-radius: 10px;
+    scrollbar-width: none;
 }
 
+//Hides the scroll bar for webkit browsers.
+#mapResultsFull::-webkit-scrollbar {
+        width: 0 !important;
+    }
+    
 // This is the format for the navigation results used with the 
 // written directions from the Navigation function.
 #navResults {
@@ -290,10 +304,6 @@ body {
     text-align: right;
 }
 
-// This gives the dropdown menu some animation using pure CSS.
-
-
-
 /*-------------------------------------@media*/
 // Changes the format for the search results from the found locations
 // when the screen size is bigger than 1150px.
@@ -306,8 +316,8 @@ body {
     background-color: $bodyBackgroundColor;
     border-radius: 20px;
     width: 100%;
-    margin-bottom: 10px;
-    margin-top: 10px;
+    margin-bottom: 30px;
+    margin-top: 20px;
     overflow: hidden;
     table-layout: fixed;
 

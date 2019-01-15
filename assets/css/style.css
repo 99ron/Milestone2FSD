@@ -86,6 +86,9 @@ body {
 .resetButton {
   padding-top: 1rem; }
 
+.input-group-text {
+  min-width: 65px; }
+
 #map {
   min-height: 640px;
   box-shadow: 0px 2px 15px black; }
@@ -101,7 +104,14 @@ body {
   overflow: auto;
   top: 0px;
   cursor: pointer;
-  overflow-x: hidden; }
+  overflow-x: hidden;
+  box-shadow: inset 0px 0px 9px rgba(0, 0, 0, 0.9);
+  border: solid grey 2px;
+  border-radius: 10px;
+  scrollbar-width: none; }
+
+#mapResultsFull::-webkit-scrollbar {
+  width: 0 !important; }
 
 #navResults {
   width: 100%;
@@ -208,8 +218,8 @@ body {
     background-color: white;
     border-radius: 20px;
     width: 100%;
-    margin-bottom: 10px;
-    margin-top: 10px;
+    margin-bottom: 30px;
+    margin-top: 20px;
     overflow: hidden;
     table-layout: fixed; }
     .resultscontainer .td-name {
