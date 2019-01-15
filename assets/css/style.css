@@ -15,7 +15,7 @@ header {
   margin-left: 50px; }
 
 .header-color {
-  background-image: linear-gradient(rgba(44, 52, 80, 0.5), rgba(44, 62, 80, 0.5)), url(".//assets/images/bannerCloud.jpg");
+  background-image: linear-gradient(rgba(44, 52, 80, 0.5), rgba(44, 62, 80, 0.5)), url("../images/bannerCloud.jpg");
   background-size: cover;
   background-repeat: no-repeat; }
 
