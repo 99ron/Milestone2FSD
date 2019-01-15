@@ -103,6 +103,9 @@ I've put my code through W3C markup validator and a few others to check my code 
    to check that if the formatted address existed then to render that otherwise use the 'viscinity' as a fall back. Same regarding if there was no photo array then to use the markerIcon from the map to fill in 
    the missing photo. 
 
+ - No header image: Once I had deployed the site and started viewing from GitHub Pages I quickly realised my images weren't loading and the google maps wasn't authorised. Added the github pages as a site usuable 
+   with my API key and corrected the file path for both the header background image and header image to display correctly, confirmed in both Firefox and Chrome.
+
 ## Deployment
 
 I've created this website using the cloud9 platform which I then created a repository on github, this is where all the files are uploaded to. Once I logged into GitHub i opened this project, 
