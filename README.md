@@ -15,6 +15,8 @@ to those locations. It's made in a straightforward and appealing way that you ca
 
 - As a user I want to find a hotel, ring and book in advance and see if they have any discounts for the local tourist attractions, then click on a link to navigate to their website.
 
+### I've added into the 'testDrawings' folder my initial sketch/drawings for the website.
+
 ## Features
 
 Searchbox - allows the user to search for a village, town or city to zoom in and get local information. This is assisted with google to make sure the spelling's correct.
